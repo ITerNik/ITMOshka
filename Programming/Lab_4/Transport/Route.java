@@ -14,7 +14,15 @@ public class Route extends Expedition{
         Place[] res = {startPoint, endPoint};
         return res;
     }
+    public String start() {
+        return this + " начался";
+    }
     public void getDistance() {
         System.out.printf("Расстояние от места %s до места %s - %d");
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Путь от %s до %s", startPoint, endPoint);
     }
 }

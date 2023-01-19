@@ -1,13 +1,12 @@
 package Transport;
 
-import Abstraction.Delayable;
 import Intentions.Solvable;
 import Places.Place;
 import Places.StopPoint;
 
 import java.util.Arrays;
 
-public class PointExpedition extends Expedition implements Solvable, Delayable {
+public class PointExpedition extends Expedition implements Solvable {
     private String name;
     private Place[] path;
 
@@ -20,14 +19,15 @@ public class PointExpedition extends Expedition implements Solvable, Delayable {
     public PointExpedition(String name) {
         this(name, new StopPoint(name));
     }
-
+    public String start() {
+        return this + " началась";
+    }
     public void hasInPath(Place point) {
         if (!Arrays.asList(path).contains(point)) {
             System.out.printf("путь до %s не заворачивает на %s\n", endPoint, point);
         } else {
             System.out.printf("путь до %s проходит через %s\n", endPoint, point);
         }
-        delay();
     }
 
     @Override

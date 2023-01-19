@@ -1,21 +1,15 @@
 package Places;
 
 import Intentions.Solvable;
+import People.Group;
 import People.Leader;
 
 public class StopPoint extends Place implements Solvable {
     public StopPoint(String name) {
         this.name = name;
     }
-    public void stay(Leader... people) {
-        String res = "";
-        for (Leader lead: people) {
-            res += lead.toString();
-            if (!lead.equals(people[people.length - 1])){
-                res += ", ";
-            }
-        }
-        System.out.println(res + (people.length > 1? " остались": " остался") + " зимовать в " + this.toString());
+    public void stay(Group people) {
+        System.out.println(people + " остались зимовать в " + this.toString());
     }
     @Override
     public String getTopic() {

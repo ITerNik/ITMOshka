@@ -8,6 +8,9 @@ public class Discovery extends Expedition{
         startPoint = start;
         endPoint = end;
     }
+    public  String start() {
+        return this + "началось";
+    }
     public Place getStartPoint() {
        return startPoint;
     }

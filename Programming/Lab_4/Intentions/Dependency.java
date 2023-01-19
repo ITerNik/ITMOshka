@@ -2,7 +2,7 @@ package Intentions;
 
 import Abstraction.*;
 
-public class Dependency extends Issue implements Delayable {
+public class Dependency extends Issue {
     private Decision dependsOf;
     public Dependency(Solvable topic, Decision depends){
         this.topic = topic;
@@ -11,7 +11,6 @@ public class Dependency extends Issue implements Delayable {
     @Override
     public void voiceIssue() {
         System.out.printf("Вопрос о %s зависит от %s\n", topic.getTopic(), dependsOf);
-        delay();
     }
     @Override
     public String toString() {

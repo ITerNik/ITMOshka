@@ -1,32 +1,32 @@
 package Things;
 
+import Places.Place;
+
 public class Fuel extends Resources{
-    public Fuel(double percentage) {
-        if (percentage > 100) {
-            this.amount = 100;
-        } else {
-            this.amount = percentage;
-        }
+    public Fuel(Amount amount) {
+        this.amount = amount;
     }
+    public Fuel() {
+        this.amount = Amount.NONE;
+    }
+
     @Override
     public String getTopic() {
         return "оставшемся топливе";
     }
     @Override
     public String toString() {
-        if (amount >= 0) {
-            return "топлива " + convert();
-        } else return convert() + "топлива";
+            return "топливо";
     }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Fuel f = (Fuel) o;
-        return Double.compare(amount, f.amount) == 0;
+        return amount.equals(f.amount);
     }
     @Override
     public int hashCode() {
-        return (int)(amount * 1e10);
+        return amount.getReal().hashCode();
     }
 }

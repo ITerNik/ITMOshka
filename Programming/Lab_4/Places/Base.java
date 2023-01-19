@@ -1,66 +1,53 @@
 package Places;
 
+import Abstraction.Time.Uncountable;
 import Intentions.*;
 import People.*;
 import Abstraction.*;
 import Things.*;
 
-public class Base extends Place implements Delayable, Solvable {
+public class Base extends Place implements Solvable {
     private Leader leader;
     private Resources[] reserves;
-    Base(String name, Leader leader, Fuel fuel, Tents tents){
+    public Base(String name, Leader leader, Fuel fuel, Tents tents){
         this.name = name;
         this.leader = leader;
         Resources[] resources = {fuel, tents};
         this.reserves = resources;
     }
     Base(String name, Leader leader, Fuel fuel) {
-        this(name, leader, fuel, new Tents(-1));
+        this(name, leader, fuel, new Tents());
     }
     Base(String name, Leader leader, Tents tents) {
-        this(name, leader, new Fuel(-1), tents);
+        this(name, leader, new Fuel(), tents);
     }
     public Base(Leader leader, Fuel fuel, Tents tents){
        this(null, leader, fuel, tents);
     }
     public Base(Leader leader, Fuel fuel){
-        this(leader, fuel, new Tents(-1));
+        this(leader, fuel, new Tents());
     }
     public Base(String name) {
-        this(name, new Leader("Неизвестный"), new Fuel(-1));
+        this(name, new Leader("Неизвестный"), new Fuel());
     }
     Base(Leader leader, Tents tents){
-        this( leader, new Fuel(-1), tents);
+        this( leader, new Fuel(), tents);
     }
     public void getState(Class res) {
-        System.out.printf("На %s %s\n", this.toString(), res == Tents.class? reserves[1].toString(): reserves[0].toString());
-        delay();
+        System.out.printf("На %s %s\n", this.toString(), res == Tents.class? reserves[1].getState(): reserves[0].getState());
     }
-    public void findNewLocation(Resources res) {
-        System.out.printf("необходимо найти новое место для ресурса %s на %s\n", res, this);
+    public void startWorks() {
+        System.out.printf("%s начал буровые работы на своей базе\n", leader);
     }
-    public void findNewLocation(Resources res, Base newBase) {
-        System.out.printf("необходимо переместить ресурс %s c места %s на место %s\n", res, this, newBase);
+    public void startWorks(Intentive intention) {
+        System.out.printf("%s %s начать буровые работы на своей базе\n", leader, intention.voiceIntention(Gender.MALE));
     }
-    public void prepareClose(Leader... people) {
-        String res = "";
-        for (Leader lead : people) {
-            res += lead.toString();
-            if (!lead.equals(people[people.length - 1])) {
-                res += ", ";
-            }
-        }
-        System.out.println(res + (people.length > 1? " подготавливают ": " подготавливает ") + this.toString()+ " к закрытию на более или менее длительный срок");
-        delay();
+    public void prepareClose(Group people) {
+        System.out.println(people + " подготавливают место:" + this.toString() + " к закрытию на более или менее длительный срок");
     }
     public void moveReserves(Base to) {
-        to.fillReserves(reserves);
-        this.reserves[0] = new Fuel(0);
-        this.reserves[1] = new Tents(0);
-    }
-    private void fillReserves(Resources[] reserves) {
-        this.reserves[0].fill(reserves[0].getAmount());
-        this.reserves[1].fill(reserves[1].getAmount());
+        this.reserves[0] = new Fuel();
+        this.reserves[1] = new Tents();
     }
     public Resources[] getReserves() {
         return reserves;

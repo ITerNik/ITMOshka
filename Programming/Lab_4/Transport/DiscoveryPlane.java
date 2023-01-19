@@ -4,7 +4,7 @@ import Abstraction.*;
 import People.Leader;
 import Places.Place;
 
-public class DiscoveryPlane extends Plane implements Delayable {
+public class DiscoveryPlane extends Plane {
     private Discovery mission;
     public DiscoveryPlane(Leader owner, Discovery mission) {
         this.owner = owner;
@@ -14,11 +14,13 @@ public class DiscoveryPlane extends Plane implements Delayable {
     @Override
     public void move(Place to) {
         System.out.printf("%s должен отправиться в исследование от %s до %s\n", this, mission.getStartPoint(), mission.getEndPoint());
-        delay();
+    }
+    public void becomeFrequent() {
+        System.out.println(this + " стал разведывать более часто");
     }
     @Override
     public String toString() {
-        return "Экспедиционный самолет " + owner + "a";
+        return "Экспедиционный самолет руководителя " + owner;
     }
     @Override
     public boolean equals(Object o) {

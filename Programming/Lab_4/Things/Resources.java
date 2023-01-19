@@ -1,31 +1,32 @@
 package Things;
 
 import Intentions.Solvable;
+import Places.*;
+import Transport.Transferable;
 
-public abstract class Resources implements Solvable {
-    protected double amount;
+public abstract class Resources implements Solvable, Transferable {
+    protected Amount amount;
 
-    protected String convert() {
-        if (amount > 75) {
-            return "до предела";
-        } else if (amount > 50 && amount <= 75) {
-            return "много";
-        } else if (amount <= 50 && amount > 25) {
-            return "хватает";
-        } else if (amount <= 25 && amount > 0) {
-            return "недостаточно";
-        } else if (amount == 0) {
-            return "нет";
-        } else return "неизвестное количество";
+    public enum Amount {
+        LIMIT("Как можно больше"),
+        MOST("Большая часть"),
+        ENOUGH("Достаточно"),
+        NONE("Нет");
+        private String real;
+        private int level;
+        protected String getReal() {
+            return real;
+        }
+        Amount(String real) {
+            this.real = real;
+        }
     }
-    public void fill(double percentage) {
-        if (amount + percentage > 100) {
-            amount = 100;
-        } else if (amount + percentage < 0) {
-            amount = 0;
-        } else amount += percentage;
+    public String getState() {
+        return this + " в количестве: " + amount.real;
     }
-    public double getAmount() {
+    public Amount getAmount() {
         return amount;
     }
+    @Override
+    public void move(Place to) {}
 }

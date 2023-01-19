@@ -17,15 +17,16 @@ public class CargoPlane extends Plane implements Solvable {
     public CargoPlane(Leader owner, Crew passengers, Base location) {
         this(owner, passengers, location.getReserves(), location);
     }
+    public CargoPlane(Leader owner) {
+        this.owner = owner;
+    }
     public String onBoard() {
         String res = "";
         for (Resources r: cargo) {
-            if(Double.compare(r.getAmount(),0) > 0) {
                 if (!r.equals(cargo[0])) {
                     res += ", ";
                 }
-                res += r;
-            }
+                res += r.getState();
         }
         return String.format("%s на борту, а также с %s в грузовом отсеке", passengers.getMembers(), res);
     }
@@ -33,7 +34,7 @@ public class CargoPlane extends Plane implements Solvable {
         return String.format("%s летит на %s, с %s", this, to, this.onBoard());
     }
     public String getFlight() {
-        return String.format("%s летит на %s, с %s", this, new Base(owner, new Fuel(-1)), this.onBoard());
+        return String.format("%s летит на %s, с %s", this, new Base(owner, new Fuel()), this.onBoard());
     }
     @Override
     public void move(Place to) {
@@ -51,7 +52,7 @@ public class CargoPlane extends Plane implements Solvable {
     }
     @Override
     public String toString() {
-        return "Самолет " + owner + "a";
+        return "Самолет руководителя " + owner;
     }
     public boolean equals(Object o) {
         if (this == o) return true;

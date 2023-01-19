@@ -1,21 +1,26 @@
 package Transport;
 
-import Abstraction.*;
+import Abstraction.Time.Time;
 
-public class DirectExpedition {
+import java.lang.reflect.Field;
+
+public class DirectExpedition extends Expedition{
     private Direction direction;
-    DirectExpedition(Direction direction) {
+    public DirectExpedition(Direction direction) {
         this.direction = direction;
     }
-    public void postpone() {
+    public String start(){
+        return this + " началась";
+    }
+    public void delay() {
         System.out.println(this + "откладывается");
     }
-    public void postpone(Time time) {
-        System.out.println(this + "откладывается" + time.getTime());
+    public void delay(Time time) {
+        System.out.println(this + " откладывается не менее чем на " + time.getTime());
     }
 
     @Override
     public String toString() {
-        return "Экспедиция в направлении" + direction.getName();
+        return "Экспедиция в направлении " + direction.getName();
     }
 }

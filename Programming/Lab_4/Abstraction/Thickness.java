@@ -5,7 +5,8 @@ public enum Thickness {
     THICK("Толстый"),
     MEDIUM("Средней толщины"),
     THIN("Тонкий"),
-    VERY_THIN("Очень тонкий");
+    VERY_THIN("Очень тонкий"),
+    NONE("Не обнаружен");
 
     private String name;
     Thickness(String name) {

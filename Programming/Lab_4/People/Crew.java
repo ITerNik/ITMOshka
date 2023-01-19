@@ -1,10 +1,9 @@
 package People;
 
-import Abstraction.Delayable;
 import Places.Place;
 import Transport.Transferable;
 
-public class Crew extends Group implements Transferable, Delayable {
+public class Crew extends Group implements Transferable {
     private int size;
     private Place location;
     public Crew(int size, Place location, Leader... members) {
@@ -17,7 +16,6 @@ public class Crew extends Group implements Transferable, Delayable {
     }
     public void finish() {
         System.out.println(this + " решила докончить начатое");
-        delay();
     }
     @Override
     public void move (Place to) {

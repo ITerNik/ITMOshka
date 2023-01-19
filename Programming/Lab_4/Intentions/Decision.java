@@ -2,7 +2,7 @@ package Intentions;
 
 import Abstraction.*;
 
-public class Decision extends Issue implements Delayable {
+public class Decision extends Issue {
     private Progress progress;
 
     public Decision(Solvable topic, Progress progress) {
@@ -24,7 +24,6 @@ public class Decision extends Issue implements Delayable {
                 System.out.printf("Даже если решение относительно %s будет принято: ", topic.getTopic());
                 break;
         }
-        delay();
     }
     @Override
     public String toString() {
