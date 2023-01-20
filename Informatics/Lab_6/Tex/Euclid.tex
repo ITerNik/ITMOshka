@@ -1,0 +1,214 @@
+\documentclass[a4paper, 12 pt]{extarticle}
+\usepackage{fancyhdr}
+\usepackage[russian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[textwidth = 18 cm, left = 1 cm,
+top = 2.5 cm, headsep = 1 cm]{geometry}
+\usepackage{lipsum}
+\usepackage{graphicx, lettrine}
+\usepackage{eufrak}
+\usepackage{tikz}
+\usetikzlibrary{angles,quotes}
+
+\begin{document}
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0pt}
+\fancyhf{}
+\fancyhead[R]{\MakeUppercase{книга iii предл. iv. теорема \qquad}}
+\setcounter{page}{96}
+\fancyhead[C]{$\mathfrak {\thepage}$}
+\begin{minipage}{0.45 \textwidth}
+\begin{tikzpicture}[scale = 1.7]
+\draw[line width = 3pt, violet](0,0) circle (2cm);
+\coordinate (a) at (-0.08,-1);
+\coordinate (b) at (0.04,1);
+\coordinate (c) at (1,-0.8);
+\draw pic[draw,fill=blue,angle radius=0.7 cm] {angle=c--a--b};
+\coordinate (m) at (-0.08,-1);
+\coordinate (n) at (2,-0.6);
+\coordinate (k) at (3,-2);
+\draw pic[draw,fill=yellow,angle radius=0.7 cm] {angle=k--m--n};
+\draw[line width = 2.5 pt, brown] (220:2) -- (-20:2);
+\node[below left] at (220:2) {\tiny $B$};
+\node[right] at (-20:2) {\tiny $D$};
+\draw[line width = 2.5 pt] (190:2) -- (310:2);
+\node[left] at (190:2) {\tiny $A$};
+\node[below right] at (310:2) {\tiny $C$};
+\draw[densely dashed, line width = 2.5 pt] (0,0) -- (-95:1);
+\node[above] at (0,0) {\tiny $F$};
+\node[below] at (-95:1.1) {\tiny $E$};
+\end{tikzpicture}
+\vspace{3.5 in}
+\end{minipage}
+\begin{minipage}{0.55 \textwidth}
+\lettrine[image=true, lines = 4]{letter.jpg}{}{ сли} {\it в круге две прямые, не проходящие через центр, пересекаются,они не делят друг друга пополам.}
+
+\vspace{0.8 cm}
+
+\setlength{\parindent}{20pt}
+Если одна из прямых проходит через центр, очевидно, она ее не может рассекать пополам другая прямая, не проходящая через центр.
+
+Но если ни одна из прямых
+\begin{tikzpicture}
+\draw[line width = 2.5 pt] (0,0) -- (1, 0);
+\node[above] at (0,0) {\tiny $A$};
+\node[above] at (1, 0) {\tiny $C$};
+\end{tikzpicture} или
+\begin{tikzpicture}
+\draw[line width = 2.5 pt, brown] (0,0) -- (1, 0);
+\node[above] at (0,0) {\tiny $B$};
+\node[above] at (1, 0) {\tiny $D$};
+\end{tikzpicture}
+не проходит через центр, проведем
+\begin{tikzpicture}
+\draw[densely dashed, line width = 2.5 pt] (0,0) -- (1, 0);
+\node[above] at (0,0) {\tiny $E$};
+\node[above] at (1, 0) {\tiny $F$};
+\end{tikzpicture} 
+из центра к точке их пересечения.
+
+\begin{center}
+\begin{minipage}{7.4 cm}
+\centering
+Если
+\begin{tikzpicture}
+\draw[line width = 2.5 pt] (0,0) -- (1, 0);
+\node[above] at (0,0) {\tiny $A$};
+\node[above] at (1, 0) {\tiny $C$};
+\end{tikzpicture}
+делится пополам,
+\begin{tikzpicture}
+\draw[densely dashed, line width = 2.5 pt] (0,0) -- (1, 0);
+\node[above] at (0,0) {\tiny $E$};
+\node[above] at (1, 0) {\tiny $F$};
+\end{tikzpicture}
+$\perp$ ей (пр. III$\mathfrak {.3}$)
+
+\begin{tikzpicture}
+\fill (0pt, 20pt) circle (1pt);
+\fill (6pt, 20pt) circle (1pt);
+\fill (3pt, 25pt) circle (1pt);
+\fill (3pt, 0pt) circle (0pt)
+\end{tikzpicture}
+\begin{tikzpicture}
+\coordinate (a) at (0, 0);
+\coordinate (b) at (80:0.3);
+\coordinate (c) at (10:0.3);
+\draw pic[draw,fill=blue,angle radius=0.7 cm] {angle=c--a--b};
+\coordinate (m) at (0,0);
+\coordinate (n) at (10:0.3);
+\coordinate (k) at (-15:0.3);
+\draw pic[draw,fill=yellow,angle radius=0.7 cm] {angle=k--m--n};
+\node[below left] at (0,0) {\tiny $E$};
+\node[below] at (-15:0.7) {\tiny $C$};
+\node[above] at (80:0.7) {\tiny $F$};
+{\hspace{1 cm}\LARGE $=$}
+\end{tikzpicture} 
+\hspace{0.75cm}
+\begin{tikzpicture}
+\draw[ultra thick] (-0.75,0.5) -- (0, 0.5) -- (0,1.25);
+\draw[line width = 3pt] (0, 1.25) arc (90:180:0.75);
+\fill (3pt, 0pt) circle (0pt)
+\end{tikzpicture}
+
+и если \begin{tikzpicture}
+\draw[line width = 2.5 pt, brown] (0,0) -- (1, 0);
+\node[above] at (0,0) {\tiny $B$};
+\node[above] at (1, 0) {\tiny $D$};
+\end{tikzpicture}
+делится пополам,
+\begin{tikzpicture}
+\draw[densely dashed, line width = 2.5 pt] (0,0) -- (1, 0);
+\node[above] at (0,0) {\tiny $E$};
+\node[above] at (1, 0) {\tiny $F$};
+\end{tikzpicture}
+$\perp$
+\begin{tikzpicture}
+\draw[line width = 2.5 pt, brown] (0,0) -- (1, 0);
+\node[above] at (0,0) {\tiny $B$};
+\node[above] at (1, 0) {\tiny $D$};
+\end{tikzpicture}
+(пр. III$\mathfrak {.3}$)
+
+\begin{tikzpicture}
+\fill (0pt, 20pt) circle (1pt);
+\fill (6pt, 20pt) circle (1pt);
+\fill (3pt, 25pt) circle (1pt);
+\fill (3pt, 0pt) circle (0pt)
+\end{tikzpicture}
+\begin{tikzpicture}
+\coordinate (a) at (0, 0);
+\coordinate (b) at (80:0.3);
+\coordinate (c) at (10:0.3);
+\draw pic[draw,fill=blue,angle radius=0.7 cm] {angle=c--a--b};
+
+\node[below left] at (0,0) {\tiny $E$};
+\node[below] at (10:0.7) {\tiny $D$};
+\node[above] at (80:0.7) {\tiny $F$};
+{\hspace{1 cm}\LARGE $=$}
+\end{tikzpicture} 
+\hspace{0.75cm}
+\begin{tikzpicture}
+\draw[ultra thick] (-0.75,0.4) -- (0, 0.4) -- (0,1.15);
+\draw[line width = 3pt] (0, 1.15) arc (90:180:0.75);
+\fill (3pt, 0pt) circle (0pt)
+\end{tikzpicture}
+
+\begin{tikzpicture}
+\fill (0pt, 20pt) circle (1pt);
+\fill (6pt, 20pt) circle (1pt);
+\fill (3pt, 25pt) circle (1pt);
+\fill (3pt, 0pt) circle (0pt)
+\end{tikzpicture}
+\begin{tikzpicture}
+\coordinate (a) at (0, 0);
+\coordinate (b) at (80:0.3);
+\coordinate (c) at (10:0.3);
+\draw pic[draw,fill=blue,angle radius=0.7 cm] {angle=c--a--b};
+\node[below left] at (0,0) {\tiny $E$};
+\node[below] at (10:0.7) {\tiny $B$};
+\node[above] at (80:0.7) {\tiny $F$};
+{\hspace{1 cm}\LARGE $=$}
+\end{tikzpicture} 
+\hspace{0.5cm}
+\begin{tikzpicture}
+\coordinate (a) at (0, 0);
+\coordinate (b) at (80:0.3);
+\coordinate (c) at (10:0.3);
+\draw pic[draw,fill=blue,angle radius=0.7 cm] {angle=c--a--b};
+\coordinate (m) at (0,0);
+\coordinate (n) at (10:0.3);
+\coordinate (k) at (-15:0.3);
+\draw pic[draw,fill=yellow,angle radius=0.7 cm] {angle=k--m--n};
+\node[below left] at (0,0) {\tiny $E$};
+\node[below] at (-15:0.7) {\tiny $C$};
+\node[above] at (80:0.7) {\tiny $F$};
+\end{tikzpicture}
+
+часть равна целому, что невозможно.
+\end{minipage}
+
+\begin{tikzpicture}
+\fill (0pt, 0pt) circle (1pt);
+\fill (6pt, 0pt) circle (1pt);
+\fill (3pt, 5pt) circle (1pt);
+\end{tikzpicture}
+\begin{tikzpicture}
+\draw[line width = 2.5 pt] (0,0) -- (1, 0);
+\node[above] at (0,0) {\tiny $A$};
+\node[above] at (1, 0) {\tiny $C$};
+\end{tikzpicture} 
+и 
+\begin{tikzpicture}
+\draw[line width = 2.5 pt, brown] (0,0) -- (1, 0);
+\node[above] at (0,0) {\tiny $B$};
+\node[above] at (1, 0) {\tiny $D$};
+\end{tikzpicture}
+не делят друг друга пополам.
+\end{center}
+\begin{flushright}
+\vspace{-1.5 ex}
+ч.т.д.
+\end{flushright}
+\end{minipage}
+\end{document}
