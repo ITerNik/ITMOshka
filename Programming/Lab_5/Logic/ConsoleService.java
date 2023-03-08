@@ -32,11 +32,13 @@ public class ConsoleService implements Service {
         connect = true;
         commandIO.write("Welcome!");
         while (connect) {
-            Person newOne = commandIO.readNewPerson();
-            System.out.println(newOne);
-            break;
-            /*String commandName = commandIO.read();
-            commandList.get(commandName).execute();*/
+            String commandName = commandIO.read();
+            try {
+                commandList.get(commandName).execute();
+            } catch (NullPointerException e) {
+                System.out.println("Нет такой команды");
+                continue;
+            }
         }
     }
 }

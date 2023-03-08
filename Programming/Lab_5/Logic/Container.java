@@ -16,6 +16,6 @@ public class Container {
     public String getInfo() {
         DateTimeFormatter format = DateTimeFormatter.ofPattern("dd MMM yyyy hh:mm:ss");
         return String.format("Тип коллекции: %s\nХранимые экземпляры: %s\nДата инициализации: %s\nКоличество элементов: %d",
-                collection.getClass().getSimpleName(),"Person" ,date.format(format) , collection.size());
+                collection.getClass().getSimpleName(), "Person", date.format(format), collection.size());
     }
 }

@@ -2,20 +2,21 @@ package Elements;
 
 import Exceptions.UnexistingColorException;
 
-public enum HairColor {
-    ORANGE("Рыжий"),
-    WHITE("Седой"),
-    BROWN("Брюнет");
+public enum EyeColor {
+    GREEN("Зеленый"),
+    RED("Красный"),
+    BLACK("Черный"),
+    BLUE("Синий"),
+    YELLOW("Желтый");
 
     private String name;
 
-    HairColor(String name) {
+    EyeColor(String name) {
         this.name = name;
     }
-
-    public static HairColor getByNumber(int number) throws UnexistingColorException {
+    public static EyeColor getByNumber(int number) {
         try {
-            return HairColor.values()[number - 1];
+            return EyeColor.values()[number - 1];
         } catch (ArrayIndexOutOfBoundsException e) {
             throw new UnexistingColorException("Нет такого цвета");
         }
@@ -24,7 +25,7 @@ public enum HairColor {
     public static void checkColor(String field) {
         try {
             int number = Integer.parseInt(field);
-            HairColor test = HairColor.values()[number - 1];
+            EyeColor test = EyeColor.values()[number - 1];
         } catch (NumberFormatException e) {
             throw e;
         } catch (ArrayIndexOutOfBoundsException e) {

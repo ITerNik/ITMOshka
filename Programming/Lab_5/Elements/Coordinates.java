@@ -10,9 +10,9 @@ public class Coordinates {
 
     @Override
     public String toString() {
-        return String.format("(%d, %d)",x, y);
+        return String.format("(%s, %s)",x, y);
     }
     public String toJson() {
-        return String.format("{\n\"x\": %d,\n\"y\": %d\n}", x, y);
+        return String.format("{\n\"x\": %s,\n\"y\": %s\n}", x, y);
     }
 }

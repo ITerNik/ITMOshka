@@ -12,9 +12,9 @@ public class Location {
 
     @Override
     public String toString() {
-        return String.format("(%d, %d, %d)", x, y, z);
+        return String.format("(%s, %s, %s)", x, y, z);
     }
     public String toJson() {
-        return String.format("{\n\"x\": %d,\n\"y\": %d,\n\"z\": %d\n}", x, y, z);
+        return String.format("{\n\"x\": %s,\n\"y\": %s,\n\"z\": %s\n}", x, y, z);
     }
 }
