@@ -22,6 +22,7 @@ public enum EyeColor {
         }
     }
 
+
     public static void checkColor(String field) {
         try {
             int number = Integer.parseInt(field);

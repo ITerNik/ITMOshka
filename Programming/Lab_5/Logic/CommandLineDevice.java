@@ -24,6 +24,7 @@ public class CommandLineDevice implements IODevice {
 
     @Override
     public Person readNewPerson() {
+       // return new Person(readName());
         return new Person(readName(), readCoordinates(), readHeight(), readWeight(),
                 readEyeColor(), readHairColor(), readLocation());
     }
@@ -47,7 +48,6 @@ public class CommandLineDevice implements IODevice {
 
     private String readName() {
         return checkField("имя", this::checkName);
-
     }
 
     private Coordinates readCoordinates() {

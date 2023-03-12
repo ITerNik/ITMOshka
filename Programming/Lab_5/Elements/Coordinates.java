@@ -7,12 +7,20 @@ public class Coordinates {
         this.x = x;
         this.y = y;
     }
-
+    public Coordinates() {};
     @Override
     public String toString() {
         return String.format("(%s, %s)",x, y);
     }
     public String toJson() {
-        return String.format("{\n\"x\": %s,\n\"y\": %s\n}", x, y);
+        return String.format("{\n\t\t\"x\": %s,\n\t\t\"y\": %s\n\t}", x, y);
+    }
+
+    public Double getX() {
+        return x;
+    }
+
+    public Integer getY() {
+        return y;
     }
 }

@@ -9,12 +9,25 @@ public class Location {
         this.y = y;
         this.z = z;
     }
+    public Location() {};
 
     @Override
     public String toString() {
         return String.format("(%s, %s, %s)", x, y, z);
     }
     public String toJson() {
-        return String.format("{\n\"x\": %s,\n\"y\": %s,\n\"z\": %s\n}", x, y, z);
+        return String.format("{\n\t\t\"x\": %s,\n\t\t\"y\": %s,\n\t\t\"z\": %s\n\t}", x, y, z);
+    }
+
+    public Double getY() {
+        return y;
+    }
+
+    public float getZ() {
+        return z;
+    }
+
+    public long getX() {
+        return x;
     }
 }
