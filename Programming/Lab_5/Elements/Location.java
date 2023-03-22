@@ -1,22 +1,20 @@
 package Elements;
 
-public class Location {
+public class Location implements Comparable<Location> {
     private long x;
     private Double y; //Поле не может быть null
     private float z;
+
     public Location(long x, double y, float z) {
         this.x = x;
         this.y = y;
         this.z = z;
     }
-    public Location() {};
+
 
     @Override
     public String toString() {
         return String.format("(%s, %s, %s)", x, y, z);
-    }
-    public String toJson() {
-        return String.format("{\n\t\t\"x\": %s,\n\t\t\"y\": %s,\n\t\t\"z\": %s\n\t}", x, y, z);
     }
 
     public Double getY() {
@@ -29,5 +27,12 @@ public class Location {
 
     public long getX() {
         return x;
+    }
+
+    @Override
+    public int compareTo(Location o) {
+        double distanceThis = Math.sqrt(x * x + y * y + z * z);
+        double distanceO = Math.sqrt(o.x * o.x + o.y * o.y + o.z * o.z);
+        return Double.compare(distanceThis, distanceO);
     }
 }

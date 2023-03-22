@@ -3,6 +3,7 @@ package Logic;
 import Elements.*;
 
 import java.io.*;
+import java.util.HashMap;
 import java.util.Scanner;
 
 import org.codehaus.jackson.map.ObjectMapper;
@@ -11,10 +12,12 @@ import org.codehaus.jackson.map.ObjectWriter;
 public class FileDevice {
     private Scanner reader;
     private BufferedOutputStream output;
+    private String fileName;
 
     public FileDevice(String fileName) throws FileNotFoundException {
         reader = new Scanner(new FileInputStream(fileName));
         output = new BufferedOutputStream(new FileOutputStream(fileName, true));
+        this.fileName = fileName;
     }
 
     public String readFileAsString() {
@@ -36,13 +39,26 @@ public class FileDevice {
         }
     }
 
-    public void writeData(Person[] collection) {
+    public void clear() throws IOException {
+        new FileOutputStream(fileName).close();
+    }
+
+    public void writeData(HashMap collection) throws IOException{
         ObjectWriter writer = new ObjectMapper().writer().withDefaultPrettyPrinter();
-        try {
-            byte[] buf = writer.writeValueAsBytes(collection);
-            output.write(buf);
-        } catch (IOException e) {
-            System.out.println("Проблемы с записью в файл");
-        }
+        byte[] buf = writer.writeValueAsBytes(collection);
+        output.write(buf);
+        output.flush();
+    }
+
+    public void write(String text) throws IOException {
+        byte[] buf = text.getBytes();
+        output.write(buf);
+        output.flush();
+    }
+
+    public HashMap readCollection() throws IOException {
+        return new ObjectMapper().readValue(readFileAsString(),
+               // new TypeReference<Map<String, Person>>(){}
+        HashMap.class);
     }
 }

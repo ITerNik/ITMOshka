@@ -1,7 +1,7 @@
 package Logic;
 
 import Commands.*;
-import Exceptions.NoArgumentException;
+import Exceptions.*;
 
 import java.util.*;
 
@@ -17,17 +17,24 @@ public class ConsoleService implements Service {
         this.container = container;
         this.commandIO = commandIO;
         this.fileIO = fileIO;
-        commandList = new HashMap<>(
-                Map.of(
-                        "info", new InfoCommand(commandIO, container),
-                        "exit", new ExitCommand(this),
-                        "show", new ShowCommand(container, commandIO),
-                        "insert", new InsertCommand(commandIO, container),
-                        "remove_key", new RemoveKeyCommand(commandIO, container),
-                        "test", new TestCommand(fileIO, commandIO)
-                )
-        );
-        commandList.put("help", new HelpCommand(commandList, commandIO));
+        commandList = new HashMap<>() {
+            {
+                put("test", new TestCommand(fileIO, commandIO));
+                put("exit", new ExitCommand(ConsoleService.this));
+                put("info", new InfoCommand(commandIO, container));
+                put("show", new ShowCommand(container, commandIO));
+                put("insert", new InsertCommand(commandIO, container).withElements(1).withParameters(1));
+                put("remove_key", new RemoveKeyCommand(commandIO, container).withParameters(1));
+                put("update_id", new UpdateIdCommand(commandIO, container).withElements(1).withParameters(1));
+                put("clear", new ClearCommand(commandIO, container));
+                put("save", new SaveCommand(commandIO, container, fileIO));
+                put("remove_lower", new RemoveLowerCommand(commandIO, container).withElements(1));
+                put("history", new HistoryCommand(commandIO, history));
+                put("remove_greater_key", new RemoveGreaterCommand(commandIO, container));
+                put("help", new HelpCommand(commandIO, commandList));
+                put("count_by_weight", new CountByWeightCommand(commandIO, container).withParameters(1));
+            }
+        };
     }
 
     private void logCommand(String commandName) {
@@ -43,14 +50,19 @@ public class ConsoleService implements Service {
         commandIO.write("Добро пожаловать!");
         while (connect) {
             commandIO.write("Пожалуйста, введите команду: ");
-            String commandName = commandIO.read();
+            String[] commandLineTokens = commandIO.readLine().split("\\s+");
+            String[] arguments = Arrays.copyOfRange(commandLineTokens, 1, commandLineTokens.length);
             try {
-                commandList.get(commandName).execute();
+                Command current = commandList.get(commandLineTokens[0]);
+                current.parseArguments(arguments);
+                current.execute();
+                logCommand(commandLineTokens[0]);
             } catch (NullPointerException e) {
                 System.out.println("Нет такой команды");
                 continue;
-            } catch (NoArgumentException e) {
-                System.out.println("Команда не может принимать пустой аргумент");
+            } catch (NotEnoughParametersException | UnwantedParametersException
+                     | NoArgumentException | IllegalArgumentException e) {
+                System.out.println(e.getMessage());
                 continue;
             }
         }

@@ -4,15 +4,18 @@ import Elements.Person;
 import Logic.CommandLineDevice;
 import Logic.FileDevice;
 
-public class TestCommand extends NonArgumentCommand {
+import java.io.IOException;
+import java.util.Arrays;
+
+
+public class TestCommand extends AbstractCommand {
     private FileDevice fileIO;
-    private CommandLineDevice commandIO;
     public TestCommand(FileDevice fileIO, CommandLineDevice commandIO) {
         this.fileIO = fileIO;
-        this.commandIO = commandIO;
+        this.io = commandIO;
     }
+
     @Override
     public void execute() {
-
     }
 }

@@ -1,6 +1,6 @@
 package Exceptions;
 
-public class NoArgumentException extends RuntimeException {
+public class NoArgumentException extends Exception {
     public NoArgumentException(String message) {
         super(message);
     }

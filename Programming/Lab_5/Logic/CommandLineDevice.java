@@ -14,7 +14,12 @@ public class CommandLineDevice implements IODevice {
 
     @Override
     public String readLine() {
-        return sin.nextLine();
+        try {
+            return sin.nextLine();
+        } catch (NoSuchElementException e) {
+            System.exit(0);
+        }
+        return null;
     }
 
     @Override
@@ -24,7 +29,7 @@ public class CommandLineDevice implements IODevice {
 
     @Override
     public Person readNewPerson() {
-       // return new Person(readName());
+        // return new Person(readName());
         return new Person(readName(), readCoordinates(), readHeight(), readWeight(),
                 readEyeColor(), readHairColor(), readLocation());
     }
@@ -38,10 +43,8 @@ public class CommandLineDevice implements IODevice {
                 return field;
             } catch (NumberFormatException e) {
                 System.out.println("Некорректный формат числа");
-            } catch (NameFormatException e) {
-                System.out.println("Имя должно содержать только буквенные символы");
-            } catch (UnexistingColorException e) {
-                System.out.println("Нет такого цвета");
+            } catch (NameFormatException | UnexistingColorException e) {
+                System.out.println(e.getMessage());
             }
         }
     }
@@ -78,8 +81,10 @@ public class CommandLineDevice implements IODevice {
                 Double.parseDouble(checkField("координату места y", Double::parseDouble)),
                 Float.parseFloat(checkField("координату места z", Float::parseFloat)));
     }
+
     private void checkName(String field) {
-        if (!field.matches("[А-Яа-яA-Za-z\\s]*")) throw new NameFormatException("Некорректное имя");
+        if (!field.matches("[А-Яа-яA-Za-z\\s]*"))
+            throw new NameFormatException("Имя должно содержать только буквенные символы");
     }
 
     @Override
