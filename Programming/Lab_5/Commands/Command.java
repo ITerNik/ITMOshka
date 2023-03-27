@@ -1,22 +1,17 @@
 package Commands;
 
 import Elements.Person;
-import Exceptions.NoArgumentException;
-import Exceptions.NotEnoughParametersException;
-import Exceptions.UnwantedParametersException;
+import Exceptions.BadParametersException;
 
 public interface Command {
 
-    Command withElements(int number);
-
-    Command withParameters(int number);
-
-    void parseArguments(String[] params) throws NotEnoughParametersException,
-            UnwantedParametersException, NoArgumentException;
-
+    Command parseArguments(String[] param) throws BadParametersException;
 
     void execute();
 
+    String getName();
+
     String getInfo();
 
+    String getReport();
 }

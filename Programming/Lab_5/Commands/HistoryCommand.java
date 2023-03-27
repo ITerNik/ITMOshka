@@ -1,25 +1,37 @@
 package Commands;
 
-import Logic.CommandLineDevice;
-
-import java.util.List;
+import Logic.CliHandler;
+import java.util.Queue;
 
 public class HistoryCommand extends AbstractCommand {
-    private List<String> commandHistory;
-    public HistoryCommand(CommandLineDevice io, List<String> commandHistory) {
+    private Queue<Command> commandHistory;
+    private String report = "";
+
+    public HistoryCommand(CliHandler cio, Queue<Command> commandHistory) {
         this.commandHistory = commandHistory;
-        this.io = io;
+        this.cio = cio;
     }
+
     @Override
     public void execute() {
-        try {
-            String res = commandHistory.get(0);
-            for (int i = 1; i < commandHistory.size(); ++i) {
-                res += ",\n" + commandHistory.get(i);
-            }
-            io.write("Выполненные команды:\n" + res);
-        } catch (IndexOutOfBoundsException e) {
-            io.write("Пока ни одной команды не исполнено");
+
+        if (commandHistory.isEmpty()) {
+            report = "Пока ни одной команды не исполнено";
+            return;
         }
+        for (Command command : commandHistory) {
+            report += "\n" + command.getName();
+        }
+        report = "Выполненные команды:" + report;
+    }
+
+    @Override
+    public String getName() {
+        return "history";
+    }
+
+    @Override
+    public String getReport() {
+        return report;
     }
 }

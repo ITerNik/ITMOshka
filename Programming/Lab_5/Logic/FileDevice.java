@@ -3,7 +3,7 @@ package Logic;
 import Elements.*;
 
 import java.io.*;
-import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Scanner;
 
 import org.codehaus.jackson.map.ObjectMapper;
@@ -43,7 +43,7 @@ public class FileDevice {
         new FileOutputStream(fileName).close();
     }
 
-    public void writeData(HashMap collection) throws IOException{
+    public void writeData(Hashtable collection) throws IOException{
         ObjectWriter writer = new ObjectMapper().writer().withDefaultPrettyPrinter();
         byte[] buf = writer.writeValueAsBytes(collection);
         output.write(buf);
@@ -56,9 +56,9 @@ public class FileDevice {
         output.flush();
     }
 
-    public HashMap readCollection() throws IOException {
+    public Hashtable readCollection() throws IOException {
         return new ObjectMapper().readValue(readFileAsString(),
                // new TypeReference<Map<String, Person>>(){}
-        HashMap.class);
+        Hashtable.class);
     }
 }

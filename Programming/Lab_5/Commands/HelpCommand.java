@@ -1,20 +1,30 @@
 package Commands;
 
-import Elements.Person;
-import Logic.CommandLineDevice;
+import Logic.CliHandler;
 
 import java.util.HashMap;
 
 public class HelpCommand extends AbstractCommand {
     private HashMap<String, Command> commandList;
-    public HelpCommand(CommandLineDevice io, HashMap<String, Command> commandList) {
+    private String report = "";
+    public HelpCommand(CliHandler cio, HashMap<String, Command> commandList) {
         this.commandList = commandList;
-        this.io = io;
+        this.cio = cio;
     }
     @Override
     public void execute() {
         for (Command command : commandList.values()) {
-            io.write(command.getInfo());
+            report += command.getName() + ": " + command.getInfo() + "\n";
         }
+    }
+
+    @Override
+    public String getName() {
+        return "help";
+    }
+
+    @Override
+    public String getReport() {
+        return report;
     }
 }

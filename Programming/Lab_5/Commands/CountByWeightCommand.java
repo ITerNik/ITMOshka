@@ -1,14 +1,15 @@
 package Commands;
 
-import Logic.CommandLineDevice;
-import Logic.Container;
+import Logic.CliHandler;
+import Logic.Manager;
 
 public class CountByWeightCommand extends AbstractCommand {
     private double weight;
+    private int count;
 
-    public CountByWeightCommand(CommandLineDevice commandIO, Container container) {
-        this.io = commandIO;
-        this.container = container;
+    public CountByWeightCommand(CliHandler cio, Manager manager) {
+        super(cio, manager);
+        parameters = new String[1];
     }
 
     @Override
@@ -22,6 +23,16 @@ public class CountByWeightCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        io.write(String.format("В коллекции найдено %s элементов с весом %s", container.countByWeight(weight), weight));
+        count = manager.countByWeight(weight);
+    }
+
+    @Override
+    public String getName() {
+        return null;
+    }
+
+    @Override
+    public String getReport() {
+        return String.format("В коллекции найдено %s элементов с весом %s", count, weight);
     }
 }

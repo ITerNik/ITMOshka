@@ -1,17 +1,26 @@
 package Commands;
 
-import Elements.Person;
-import Logic.CommandLineDevice;
-import Logic.Container;
+import Logic.CliHandler;
+import Logic.Manager;
 
 public class ShowCommand extends AbstractCommand {
-    public ShowCommand(Container container, CommandLineDevice commandIO) {
-        this.container = container;
-        this.io = commandIO;
+    private String report;
+    public ShowCommand( CliHandler cio, Manager manager) {
+        super (cio, manager);
     }
 
     @Override
     public void execute() {
-        io.write(container.toString());
+        report = manager.toString();
+    }
+
+    @Override
+    public String getName() {
+        return "show";
+    }
+
+    @Override
+    public String getReport() {
+        return report;
     }
 }

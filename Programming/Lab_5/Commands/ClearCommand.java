@@ -1,16 +1,24 @@
 package Commands;
 
-import Logic.CommandLineDevice;
-import Logic.Container;
+import Logic.CliHandler;
+import Logic.Manager;
 
 public class ClearCommand extends AbstractCommand {
-    public ClearCommand(CommandLineDevice io, Container container) {
-        this.io = io;
-        this.container = container;
+    public ClearCommand(CliHandler io, Manager manager) {
+        super(io, manager);
     }
     @Override
     public void execute() {
-        container.clear();
-        io.write("Коллекция очищена");
+        manager.clear();
+    }
+
+    @Override
+    public String getName() {
+        return "clear";
+    }
+
+    @Override
+    public String getReport() {
+        return "Коллекция очищена";
     }
 }

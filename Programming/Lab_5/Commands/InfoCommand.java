@@ -1,15 +1,27 @@
 package Commands;
 
-import Logic.Container;
-import Logic.IODevice;
+import Logic.CliHandler;
+import Logic.Manager;
 
 public class InfoCommand extends AbstractCommand {
-    public InfoCommand(IODevice io, Container container) {
-        this.io = io;
-        this.container = container;
+    private String report;
+
+    public InfoCommand(CliHandler cio, Manager manager) {
+        super(cio, manager);
     }
+
     @Override
     public void execute() {
-        io.write(container.getInfo());
+        report = manager.getInfo();
+    }
+
+    @Override
+    public String getName() {
+        return "info";
+    }
+
+    @Override
+    public String getReport() {
+        return report;
     }
 }

@@ -12,4 +12,14 @@ public class ExitCommand extends AbstractCommand {
     public void execute() {
         service.exit();
     }
+
+    @Override
+    public String getName() {
+        return "exit";
+    }
+
+    @Override
+    public String getReport() {
+        return "Заглядывайте еще!";
+    }
 }

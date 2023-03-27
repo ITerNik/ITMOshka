@@ -1,21 +1,25 @@
 package Commands;
 
 import Elements.Person;
-import Logic.CommandLineDevice;
+import Logic.CliHandler;
 import Logic.FileDevice;
-
-import java.io.IOException;
-import java.util.Arrays;
 
 
 public class TestCommand extends AbstractCommand {
-    private FileDevice fileIO;
-    public TestCommand(FileDevice fileIO, CommandLineDevice commandIO) {
-        this.fileIO = fileIO;
-        this.io = commandIO;
+    private FileDevice fio;
+
+    public TestCommand(FileDevice fio, CliHandler cio) {
+        this.fio = fio;
+        this.cio = cio;
+        parameters = new String[3];
     }
 
     @Override
     public void execute() {
+    }
+
+    @Override
+    public String getName() {
+        return "test";
     }
 }

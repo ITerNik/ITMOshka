@@ -1,30 +1,35 @@
 package Commands;
 
-import Elements.Person;
-import Logic.CommandLineDevice;
-import Logic.Container;
+import Logic.CliHandler;
+import Logic.Manager;
 import Logic.FileDevice;
 
-import java.io.FileReader;
 import java.io.IOException;
 
 public class SaveCommand extends  AbstractCommand {
-    private FileDevice fileIO;
-    public SaveCommand(CommandLineDevice commandIO, Container container, FileDevice fileIO) {
-        this.io = commandIO;
-        this.fileIO = fileIO;
-        this.container = container;
+    private FileDevice fio;
+    public SaveCommand(CliHandler cio, Manager manager, FileDevice fio) {
+        super(cio, manager);
+        this.fio = fio;
     }
 
     @Override
     public void execute() {
         try {
-            fileIO.clear();
-            fileIO.writeData(container.getCollection());
-            io.write("Коллекция успешно записана");
+            fio.clear();
+            fio.writeData(manager.getCollection());
         } catch (IOException e) {
-            io.write("Возникли проблемы при записи в файл");
+            cio.write("Возникли проблемы при записи в файл");
         }
+    }
 
+    @Override
+    public String getName() {
+        return "save";
+    }
+
+    @Override
+    public String getReport() {
+        return "Коллекция успешно записана";
     }
 }
