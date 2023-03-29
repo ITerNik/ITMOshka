@@ -1,7 +1,5 @@
 package Elements;
 
-import Exceptions.UnexistingColorException;
-
 public enum EyeColor {
     GREEN("Зеленый"),
     RED("Красный"),
@@ -14,11 +12,12 @@ public enum EyeColor {
     EyeColor(String name) {
         this.name = name;
     }
+
     public static EyeColor getByNumber(int number) {
         try {
             return EyeColor.values()[number - 1];
         } catch (ArrayIndexOutOfBoundsException e) {
-            throw new UnexistingColorException("Нет такого цвета");
+            throw new IllegalArgumentException("Нет такого цвета");
         }
     }
 
@@ -30,7 +29,7 @@ public enum EyeColor {
         } catch (NumberFormatException e) {
             throw e;
         } catch (ArrayIndexOutOfBoundsException e) {
-            throw new UnexistingColorException("Нет такого цвета");
+            throw new IllegalArgumentException("Нет такого цвета");
         }
     }
 

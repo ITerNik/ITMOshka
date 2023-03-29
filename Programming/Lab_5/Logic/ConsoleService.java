@@ -3,24 +3,25 @@ package Logic;
 import Commands.*;
 import Exceptions.*;
 
+import java.io.FileNotFoundException;
 import java.util.*;
 
 public class ConsoleService implements Service {
     private boolean connect;
     private Queue<Command> history = new LinkedList<>();
     private Manager manager;
-    private CliHandler cio;
-    private FileDevice fio;
+    private CliDevice cio;
+    private JsonHandler handler;
     private CommandBuilder builder;
 
-    public ConsoleService(CliHandler commandIO, Manager manager, FileDevice fileIO) {
+    public ConsoleService(CliDevice commandIO, Manager manager, JsonHandler handler) throws FileNotFoundException {
         this.manager = manager;
         this.cio = commandIO;
-        this.fio = fileIO;
+        this.handler = handler;
         this.builder = new CommandBuilder(cio);
     }
 
-    private class CommandBuilder {
+    public class CommandBuilder {
         private HashMap<String, Command> commandList = new HashMap<>();
         private IODevice io;
 
@@ -35,27 +36,30 @@ public class ConsoleService implements Service {
 
         private void initialize() {
             addCommand(new ExitCommand(ConsoleService.this));
-            addCommand(new ClearCommand(cio, manager));
-            addCommand(new TestCommand(fio, cio));
-            addCommand(new InfoCommand(cio, manager));
-            addCommand(new ShowCommand(cio, manager));
-            addCommand(new InsertCommand(cio, manager));
-            addCommand(new RemoveKeyCommand(cio, manager));
-            addCommand(new UpdateIdCommand(cio, manager));
-            addCommand(new SaveCommand(cio, manager, fio));
-            addCommand(new RemoveLowerCommand(cio, manager));
-            addCommand(new HistoryCommand(cio, history));
-            addCommand(new RemoveGreaterCommand(cio, manager));
-            addCommand(new HelpCommand(cio, commandList));
-            addCommand(new CountByWeightCommand(cio, manager));
+            addCommand(new ClearCommand(io, manager));
+            addCommand(new TestCommand(io, manager));
+            addCommand(new InfoCommand(io, manager));
+            addCommand(new ShowCommand(io, manager));
+            addCommand(new InsertCommand(io, manager));
+            addCommand(new RemoveKeyCommand(io, manager));
+            addCommand(new UpdateIdCommand(io, manager));
+            addCommand(new SaveCommand(io, manager, handler));
+            addCommand(new RemoveLowerCommand(io, manager));
+            addCommand(new HistoryCommand(io, history));
+            addCommand(new RemoveGreaterCommand(io, manager));
+            addCommand(new HelpCommand(io, commandList));
+            addCommand(new CountByWeightCommand(io, manager));
+            addCommand(new ExecuteScriptCommand(io, manager, ConsoleService.this));
+            addCommand(new GreaterLocationCommand(io, manager));
+            addCommand(new FilterByLocationCommand(io, manager));
         }
 
         public Command build(String line) throws NoSuchCommandException, BadParametersException {
+            String[] tokens = line.split("\\s+");
             try {
-                String[] tokens = line.split("\\s+");
                 return commandList.get(tokens[0]).parseArguments(Arrays.copyOfRange(tokens, 1, tokens.length));
             } catch (NullPointerException e) {
-                throw new NoSuchCommandException("Нет такой команды");
+                throw new NoSuchCommandException("Не существует команды " + tokens[0]);
             }
         }
     }
@@ -78,13 +82,14 @@ public class ConsoleService implements Service {
                 String commandLine = cio.readLine();
                 Command current = builder.build(commandLine);
                 current.execute();
-                cio.write(current.getReport());
+                cio.write(current.getReport() + "\n");
                 logCommand(current);
             } catch (NoSuchCommandException | BadParametersException e) {
-                cio.write(e.getMessage());
+                cio.write(e.getMessage() + "\n");
+            } catch (NoSuchElementException e) {
+                connect = false;
             }
         }
-        cio.write("Заглядывайте еще!");
     }
 
     @Override

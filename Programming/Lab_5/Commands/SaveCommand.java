@@ -1,25 +1,26 @@
 package Commands;
 
-import Logic.CliHandler;
+import Logic.CliDevice;
+import Logic.IODevice;
 import Logic.Manager;
-import Logic.FileDevice;
+import Logic.JsonHandler;
 
 import java.io.IOException;
 
 public class SaveCommand extends  AbstractCommand {
-    private FileDevice fio;
-    public SaveCommand(CliHandler cio, Manager manager, FileDevice fio) {
-        super(cio, manager);
-        this.fio = fio;
+    private JsonHandler handler;
+    public SaveCommand(IODevice io, Manager manager, JsonHandler handler) {
+        super(io, manager);
+        this.handler = handler;
     }
 
     @Override
     public void execute() {
         try {
-            fio.clear();
-            fio.writeData(manager.getCollection());
+            handler.clear();
+            handler.writeData(manager.getCollection());
         } catch (IOException e) {
-            cio.write("Возникли проблемы при записи в файл");
+            io.write("Возникли проблемы при записи в файл");
         }
     }
 
@@ -31,5 +32,10 @@ public class SaveCommand extends  AbstractCommand {
     @Override
     public String getReport() {
         return "Коллекция успешно записана";
+    }
+
+    @Override
+    public String getInfo() {
+        return "сохраняет коллекцию в файл";
     }
 }

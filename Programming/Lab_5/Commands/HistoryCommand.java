@@ -1,15 +1,16 @@
 package Commands;
 
-import Logic.CliHandler;
+import Logic.IODevice;
+
 import java.util.Queue;
 
 public class HistoryCommand extends AbstractCommand {
     private Queue<Command> commandHistory;
     private String report = "";
 
-    public HistoryCommand(CliHandler cio, Queue<Command> commandHistory) {
+    public HistoryCommand(IODevice io, Queue<Command> commandHistory) {
         this.commandHistory = commandHistory;
-        this.cio = cio;
+        this.io = io;
     }
 
     @Override
@@ -33,5 +34,10 @@ public class HistoryCommand extends AbstractCommand {
     @Override
     public String getReport() {
         return report;
+    }
+
+    @Override
+    public String getInfo() {
+        return "выводит последние 8 команд (без их аргументов)";
     }
 }

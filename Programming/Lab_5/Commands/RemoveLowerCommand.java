@@ -1,16 +1,16 @@
 package Commands;
 
-import Logic.CliHandler;
+import Elements.Person;
+import Logic.IODevice;
 import Logic.Manager;
 
-import javax.naming.ldap.PagedResultsControl;
 import java.util.ArrayList;
 
 public class RemoveLowerCommand extends AbstractCommand {
     private ArrayList<String> removed;
-    public RemoveLowerCommand(CliHandler cio, Manager manager) {
-        super(cio, manager);
-        parameters = new String[1];
+    public RemoveLowerCommand(IODevice io, Manager manager) {
+        super(io, manager);
+        elements = new Person[1];
     }
 
     @Override
@@ -30,5 +30,10 @@ public class RemoveLowerCommand extends AbstractCommand {
         } else {
             return "Удалены следующие объекты:\n" + removed;
         }
+    }
+
+    @Override
+    public String getInfo() {
+        return "удаляет из коллекции все элементы, меньшие, чем заданный";
     }
 }

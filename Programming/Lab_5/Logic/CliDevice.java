@@ -1,20 +1,19 @@
 package Logic;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
+import java.util.*;
 
-public class FileDevice extends IODevice {
+public class CliDevice extends IODevice {
 
-    public FileDevice(String fileName) throws FileNotFoundException {
-
-        super(new Scanner(new FileInputStream(fileName)));
+    public CliDevice() {
+        super(new Scanner(System.in));
     }
 
     @Override
     protected String checkField(String fieldName, ValidChecker checker) {
+        while (true) {
             try {
-                String field = input.nextLine();
+                System.out.printf("Введите %s: ", fieldName);
+                String field = input.next();
                 checker.checkValue(field);
                 return field;
             } catch (NumberFormatException e) {
@@ -22,10 +21,6 @@ public class FileDevice extends IODevice {
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
-        return null;
-    }
-
-    public boolean hasNextLine() {
-        return input.hasNextLine();
+        }
     }
 }

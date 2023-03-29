@@ -1,10 +1,10 @@
 package Commands;
 
-import Logic.CliHandler;
+import Logic.IODevice;
 import Logic.Manager;
 
 public class ClearCommand extends AbstractCommand {
-    public ClearCommand(CliHandler io, Manager manager) {
+    public ClearCommand(IODevice io, Manager manager) {
         super(io, manager);
     }
     @Override
@@ -20,5 +20,10 @@ public class ClearCommand extends AbstractCommand {
     @Override
     public String getReport() {
         return "Коллекция очищена";
+    }
+
+    @Override
+    public String getInfo() {
+        return "очищает коллекцию";
     }
 }

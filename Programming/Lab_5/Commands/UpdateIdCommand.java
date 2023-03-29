@@ -1,22 +1,25 @@
 package Commands;
 
-import Logic.CliHandler;
+
+import Logic.IODevice;
 import Logic.Manager;
+
+import java.util.ArrayList;
 
 public class UpdateIdCommand extends AbstractCommand {
     private int id;
-    private String key;
+    private ArrayList<String> keys;
 
-    public UpdateIdCommand(CliHandler cio, Manager manager) {
-        super(cio, manager);
-        parameters = new String[1];
+    public UpdateIdCommand(IODevice io, Manager manager) {
+        super(io, manager);
+        parameters = new String[]{"id"};
     }
 
     @Override
     protected void checkArguments(String[] param) throws IllegalArgumentException {
         try {
             id = Integer.parseInt(param[0]);
-            key = manager.findById(id);
+            keys = manager.findById(id);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("ID должен быть целым числом");
         }
@@ -24,7 +27,9 @@ public class UpdateIdCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        manager.update(key, elements[0]);
+        for (String key : keys) {
+            manager.update(key, elements[0]);
+        }
     }
 
     @Override
@@ -34,6 +39,11 @@ public class UpdateIdCommand extends AbstractCommand {
 
     @Override
     public String getReport() {
-        return "Элемент " + key + " успешно изменен";
+        return "Измененные элементы:\n" + keys;
+    }
+
+    @Override
+    public String getInfo() {
+        return "обновляет значение элемента коллекции, id которого равен заданному";
     }
 }

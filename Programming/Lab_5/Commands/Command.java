@@ -14,4 +14,6 @@ public interface Command {
     String getInfo();
 
     String getReport();
+
+    String argumentsInfo();
 }

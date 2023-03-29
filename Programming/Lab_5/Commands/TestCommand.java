@@ -1,25 +1,29 @@
 package Commands;
 
 import Elements.Person;
-import Logic.CliHandler;
 import Logic.FileDevice;
+import Logic.IODevice;
+import Logic.Manager;
 
 
 public class TestCommand extends AbstractCommand {
-    private FileDevice fio;
-
-    public TestCommand(FileDevice fio, CliHandler cio) {
-        this.fio = fio;
-        this.cio = cio;
-        parameters = new String[3];
+    public TestCommand(IODevice io, Manager manager) {
+        super(io,manager);
+        elements = new Person[1];
     }
 
     @Override
     public void execute() {
+        io.write(elements[0]);
     }
 
     @Override
     public String getName() {
         return "test";
+    }
+
+    @Override
+    public String getInfo() {
+        return "побочная команда для тестов";
     }
 }

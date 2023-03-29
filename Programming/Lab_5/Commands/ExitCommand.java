@@ -22,4 +22,9 @@ public class ExitCommand extends AbstractCommand {
     public String getReport() {
         return "Заглядывайте еще!";
     }
+
+    @Override
+    public String getInfo() {
+        return "завершает программу (без сохранения в файл)";
+    }
 }

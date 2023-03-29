@@ -1,15 +1,16 @@
 package Commands;
 
-import Logic.CliHandler;
+import Logic.CliDevice;
+import Logic.IODevice;
 import Logic.Manager;
 
 import java.util.ArrayList;
 
 public class RemoveGreaterCommand extends AbstractCommand {
     private ArrayList<String> removed;
-    public RemoveGreaterCommand(CliHandler cio, Manager manager) {
-        super(cio, manager);
-        parameters = new String[1];
+    public RemoveGreaterCommand(IODevice io, Manager manager) {
+        super(io, manager);
+        parameters = new String[]{"key"};
     }
 
     @Override
@@ -29,5 +30,10 @@ public class RemoveGreaterCommand extends AbstractCommand {
         } else {
             return "Удалены следующие объекты:\n" + removed;
         }
+    }
+
+    @Override
+    public String getInfo() {
+        return "удаляет из коллекции все элементы, ключ которых превышает заданный";
     }
 }

@@ -1,12 +1,13 @@
 package Commands;
 
-import Logic.CliHandler;
+import Logic.CliDevice;
+import Logic.IODevice;
 import Logic.Manager;
 
 public class RemoveKeyCommand extends AbstractCommand {
-    public RemoveKeyCommand(CliHandler cio, Manager manager) {
-        super(cio, manager);
-        parameters = new String[1];
+    public RemoveKeyCommand(IODevice io, Manager manager) {
+        super(io, manager);
+        parameters = new String[]{"key"};
     }
 
     @Override
@@ -28,5 +29,10 @@ public class RemoveKeyCommand extends AbstractCommand {
     @Override
     public String getReport() {
         return "Элемент " + parameters[0] + " успешно удален";
+    }
+
+    @Override
+    public String getInfo() {
+        return "удаляет элемент из коллекции по его ключу";
     }
 }

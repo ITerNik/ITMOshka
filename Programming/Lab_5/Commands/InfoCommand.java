@@ -1,13 +1,14 @@
 package Commands;
 
-import Logic.CliHandler;
+import Logic.CliDevice;
+import Logic.IODevice;
 import Logic.Manager;
 
 public class InfoCommand extends AbstractCommand {
     private String report;
 
-    public InfoCommand(CliHandler cio, Manager manager) {
-        super(cio, manager);
+    public InfoCommand(IODevice io, Manager manager) {
+        super(io, manager);
     }
 
     @Override
@@ -23,5 +24,10 @@ public class InfoCommand extends AbstractCommand {
     @Override
     public String getReport() {
         return report;
+    }
+
+    @Override
+    public String getInfo() {
+        return  "выводит в стандартный поток вывода информацию о коллекции (тип, дата инициализации, количество элементов и т.д.)";
     }
 }

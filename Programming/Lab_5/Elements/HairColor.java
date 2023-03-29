@@ -1,7 +1,5 @@
 package Elements;
 
-import Exceptions.UnexistingColorException;
-
 public enum HairColor {
     ORANGE("Рыжий"),
     WHITE("Седой"),
@@ -13,11 +11,11 @@ public enum HairColor {
         this.name = name;
     }
 
-    public static HairColor getByNumber(int number) throws UnexistingColorException {
+    public static HairColor getByNumber(int number) {
         try {
             return HairColor.values()[number - 1];
         } catch (ArrayIndexOutOfBoundsException e) {
-            throw new UnexistingColorException("Нет такого цвета");
+            throw new IllegalArgumentException("Нет такого цвета");
         }
     }
 
@@ -28,7 +26,7 @@ public enum HairColor {
         } catch (NumberFormatException e) {
             throw e;
         } catch (ArrayIndexOutOfBoundsException e) {
-            throw new UnexistingColorException("Нет такого цвета");
+            throw new IllegalArgumentException("Нет такого цвета");
         }
     }
 

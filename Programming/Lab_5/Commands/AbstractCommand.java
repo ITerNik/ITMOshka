@@ -2,25 +2,24 @@ package Commands;
 
 import Elements.Person;
 import Exceptions.*;
-import Logic.CliHandler;
+import Logic.IODevice;
 import Logic.Manager;
-
-import java.util.Arrays;
+import Logic.Service;
 
 public abstract class AbstractCommand implements Command {
     protected Manager manager;
-    protected CliHandler cio;
+    protected IODevice io;
     protected String[] parameters;
     protected Person[] elements;
 
     public AbstractCommand() {}
 
-    public AbstractCommand(CliHandler cio, Manager manager) {
+    public AbstractCommand(IODevice io, Manager manager) {
         this.manager = manager;
-        this.cio = cio;
+        this.io = io;
     }
 
-    protected void checkArguments(String[] param) throws IllegalArgumentException {
+    protected void checkArguments(String[] param) throws BadParametersException {
     }
 
     @Override
@@ -39,7 +38,7 @@ public abstract class AbstractCommand implements Command {
 
         if (elements != null) {
             for (int i = 0; i < elements.length; ++i) {
-                elements[i] = cio.readNewPerson();
+                elements[i] = io.readPerson();
             }
         }
         return this;
@@ -53,5 +52,21 @@ public abstract class AbstractCommand implements Command {
     @Override
     public String getReport() {
         return "Команда успешно выполнена";
+    }
+
+    @Override
+    public String argumentsInfo() {
+        String res = "";
+        if (parameters != null) {
+            for (String param : parameters) {
+                res += " " + param;
+            }
+        }
+        if (elements != null) {
+            for (int i = 0; i < elements.length; ++i) {
+                res += " {element}";
+            }
+        }
+        return res;
     }
 }

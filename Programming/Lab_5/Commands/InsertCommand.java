@@ -1,12 +1,16 @@
 package Commands;
 
-import Logic.CliHandler;
+import Elements.Person;
+import Logic.CliDevice;
+import Logic.IODevice;
 import Logic.Manager;
 
+
 public class InsertCommand extends AbstractCommand {
-    public InsertCommand(CliHandler cio, Manager manager) {
-        super(cio, manager);
-        parameters = new String[1];
+    public InsertCommand(IODevice io, Manager manager) {
+        super(io, manager);
+        elements = new Person[1];
+        parameters = new String[]{"key"};
     }
 
     @Override
@@ -28,5 +32,10 @@ public class InsertCommand extends AbstractCommand {
     @Override
     public String getReport() {
         return "Элемент " + parameters[0] + " добавлен";
+    }
+
+    @Override
+    public String getInfo() {
+        return "добавляет новый элемент с заданным ключом";
     }
 }

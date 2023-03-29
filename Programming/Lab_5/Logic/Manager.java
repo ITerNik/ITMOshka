@@ -1,18 +1,17 @@
 package Logic;
 
+import Elements.Location;
 import Elements.Person;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Hashtable;
+import java.util.*;
 import java.util.function.Predicate;
 
 public class Manager {
     private Hashtable<String, Person> collection;
     private LocalDateTime date;
+
 
     {
         date = LocalDateTime.now();
@@ -33,20 +32,29 @@ public class Manager {
     }
 
     public int countByWeight(double weight) {
-        int count = 0;
-        for (String key: collection.keySet()) {
-            if (collection.get(key).getWeight() == weight) {
-                count++;
-            }
-        }
-        return count;
+        return getKeyIf(currKey -> Double.compare(collection.get(currKey).getWeight(), weight) == 0).size();
     }
 
-    public String findById(int id) {
-        for (String key: collection.keySet()) {
-            if (collection.get(key).getId() == id) return key;
+    public ArrayList<String> findById(int id) {
+        ArrayList<String> selected = getKeyIf(currKey -> collection.get(currKey).getId() == id);
+        if (!selected.isEmpty()) return selected;
+        else throw new IllegalArgumentException("Элементов с таким ID не существует");
+    }
+
+    public int countGreaterThanLocation(Location location) {
+        return getKeyIf(currKey -> collection.get(currKey).getLocation().compareTo(location) > 0).size();
+    }
+
+    public ArrayList<Person> filterByLocation(Location location) {
+        ArrayList<String> selected = getKeyIf(currKey -> collection.get(currKey).getLocation() == location);
+        ArrayList<Person> res = new ArrayList<>();
+        if (selected.isEmpty()) throw new IllegalArgumentException("Элементов с такой локацией не существует");
+        else {
+            for (String key: selected) {
+                res.add(collection.get(key));
+            }
+            return res;
         }
-        throw new IllegalArgumentException("Элемента с таким ID не существует");
     }
 
     @Override
@@ -81,20 +89,30 @@ public class Manager {
         return collection;
     }
 
-    private ArrayList<String> removeIf(Predicate<? super String> filter) {
-        ArrayList<String> removed = new ArrayList<>();
-        for (String currKey: collection.keySet()) {
+
+    private ArrayList<String> getKeyIf(Predicate<? super String> filter) {
+        ArrayList<String> selected = new ArrayList<>();
+        for (String currKey : collection.keySet()) {
             if (filter.test(currKey)) {
-                collection.remove(currKey);
-                removed.add(currKey);
+                selected.add(currKey);
             }
+        }
+        return selected;
+    }
+
+    public ArrayList<String> removeGreater(String key) {
+        ArrayList<String> removed = getKeyIf(currKey -> currKey.compareTo(key) < 0);
+        for (String currKey: removed) {
+            collection.remove(currKey);
         }
         return removed;
     }
-    public ArrayList<String> removeGreater(String key) {
-        return removeIf(currKey -> currKey.compareTo(key) < 0);
-    }
+
     public ArrayList<String> removeLower(Person element) {
-       return removeIf(currKey -> collection.get(currKey).compareTo(element) > 0);
+        ArrayList<String> removed = getKeyIf(currKey -> collection.get(currKey).compareTo(element) > 0);
+        for (String currKey: removed) {
+            collection.remove(currKey);
+        }
+        return removed;
     }
 }
