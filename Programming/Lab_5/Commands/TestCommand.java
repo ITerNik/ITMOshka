@@ -7,12 +7,11 @@ import logic.Manager;
 
 public class TestCommand extends AbstractCommand {
     public TestCommand(IODevice io, Manager manager) {
-        super(io,manager);
+        super(io, manager);
     }
 
     @Override
     public void execute() {
-        manager.put("New", new Person());
     }
 
     @Override

@@ -1,6 +1,8 @@
 package commands;
 
 import elements.Person;
+import exceptions.BadParametersException;
+import exceptions.NonUniqueIdException;
 import logic.IODevice;
 import logic.Manager;
 

@@ -12,6 +12,7 @@ public class UpdateIdCommand extends AbstractCommand {
     public UpdateIdCommand(IODevice io, Manager manager) {
         super(io, manager);
         setParameterNames("id");
+        setElementNumber(1);
     }
 
     @Override

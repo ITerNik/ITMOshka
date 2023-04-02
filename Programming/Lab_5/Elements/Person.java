@@ -1,9 +1,14 @@
 package elements;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import exceptions.BadParametersException;
+
 import java.time.LocalDate;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Person implements Comparable<Person> {
-    private static Integer generalId = 0; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
+    private static AtomicInteger idCounter = new AtomicInteger(0); //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private int id;
     private String name; //Поле не может быть null, Строка не может быть пустой
     private Coordinates coordinates; //Поле не может быть null
@@ -16,7 +21,7 @@ public class Person implements Comparable<Person> {
     private Location location; //Поле может быть null
 
     {
-        generalId++;
+        idCounter.incrementAndGet();
         creationDate = LocalDate.now();
     }
 
@@ -33,6 +38,7 @@ public class Person implements Comparable<Person> {
     }
 
     public Person(String name, Coordinates coordinates, double height, double weight, EyeColor eyeColor, HairColor hairColor, Location location) {
+        this.id = idCounter.get();
         this.name = name;
         this.coordinates = coordinates;
         this.height = height;
@@ -90,6 +96,12 @@ public class Person implements Comparable<Person> {
     public LocalDate getCreationDate() {
         return creationDate;
     }
+
+    public void setCounterId(int id) {
+        this.id = id;
+        idCounter.set(id);
+    }
+
 
     @Override
     public int compareTo(Person o) {

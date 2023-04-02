@@ -3,7 +3,6 @@ package logic;
 import commands.*;
 import exceptions.*;
 
-import java.io.FileNotFoundException;
 import java.util.*;
 
 public class ConsoleService implements Service {
@@ -14,7 +13,7 @@ public class ConsoleService implements Service {
     private JsonHandler handler;
     private CommandBuilder builder;
 
-    public ConsoleService(CliDevice commandIO, Manager manager, JsonHandler handler) throws FileNotFoundException {
+    public ConsoleService(CliDevice commandIO, Manager manager, JsonHandler handler) {
         this.manager = manager;
         this.cio = commandIO;
         this.handler = handler;

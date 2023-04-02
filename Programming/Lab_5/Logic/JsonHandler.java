@@ -9,17 +9,21 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import elements.Person;
+import exceptions.StartingProblemException;
 
 public class JsonHandler implements Closeable {
     private Scanner input;
     private BufferedOutputStream output;
     private File file;
 
-    public JsonHandler(String fileName) throws FileNotFoundException {
-        this.file = new File(fileName);
-        input = new Scanner(new FileInputStream(file));
-        output = new BufferedOutputStream(new FileOutputStream(file, true));
-
+    public JsonHandler(String fileName) throws StartingProblemException {
+        try {
+            this.file = new File(fileName);
+            input = new Scanner(new FileInputStream(file));
+            output = new BufferedOutputStream(new FileOutputStream(file, true));
+        } catch (FileNotFoundException  e) {
+            throw new StartingProblemException("Файл не найден");
+        }
     }
 
     private String readFileAsString() {
@@ -44,27 +48,29 @@ public class JsonHandler implements Closeable {
         output.flush();
     }
 
-    public void write(String text) throws IOException {
-        byte[] buf = text.getBytes();
-        output.write(buf);
-        output.flush();
-    }
-
-    public Hashtable readCollection() throws JsonProcessingException {
+    public Hashtable<String, Person> readCollection() throws StartingProblemException {
         ObjectMapper mapper = new ObjectMapper();
         TypeReference<Hashtable<String, Person>> typeRef = new TypeReference<>() {
         };
-        String res = readFileAsString();
+        String fileAsString = readFileAsString();
         mapper.registerModule(new JavaTimeModule());
-        if (res.isBlank()) {
-            return new Hashtable<String, Person>();
+        if (fileAsString.isBlank()) {
+            return new Hashtable<>();
         }
-        return mapper.readValue(res, typeRef);
+        try {
+            return mapper.readValue(fileAsString, typeRef);
+        } catch (JsonProcessingException e) {
+            throw new StartingProblemException("Невозможно десериализовать данные в файле");
+        }
     }
 
     @Override
-    public void close() throws IOException {
-        output.close();
-        input.close();
+    public void close() {
+        try {
+            output.close();
+            input.close();
+        } catch (IOException e) {
+            throw new RuntimeException("Не удается закрыть файл");
+        }
     }
 }
