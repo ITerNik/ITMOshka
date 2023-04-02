@@ -1,18 +1,19 @@
-package Commands;
+package commands;
 
-import Elements.Location;
-import Exceptions.BadParametersException;
-import Logic.IODevice;
-import Logic.Manager;
+import elements.Location;
+import exceptions.BadParametersException;
+import logic.IODevice;
+import logic.Manager;
 
-public class GreaterLocationCommand extends AbstractCommand{
+public class GreaterLocationCommand extends AbstractCommand {
     private long x;
     private double y;
     private float z;
     private int count;
+
     public GreaterLocationCommand(IODevice io, Manager manager) {
         super(io, manager);
-        parameters = new String[]{"x_coordinate", "y_coordinate", "z_coordinate"};
+        setParameterNames("x_coordinate", "y_coordinate", "z_coordinate");
     }
 
     @Override

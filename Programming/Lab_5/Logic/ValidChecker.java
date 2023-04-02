@@ -1,4 +1,4 @@
-package Logic;
+package logic;
 
 @FunctionalInterface
 public interface ValidChecker {

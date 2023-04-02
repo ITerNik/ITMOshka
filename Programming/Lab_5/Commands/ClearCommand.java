@@ -1,7 +1,7 @@
-package Commands;
+package commands;
 
-import Logic.IODevice;
-import Logic.Manager;
+import logic.IODevice;
+import logic.Manager;
 
 public class ClearCommand extends AbstractCommand {
     public ClearCommand(IODevice io, Manager manager) {

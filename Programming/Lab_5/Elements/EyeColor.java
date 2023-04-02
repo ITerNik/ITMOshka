@@ -1,4 +1,4 @@
-package Elements;
+package elements;
 
 public enum EyeColor {
     GREEN("Зеленый"),

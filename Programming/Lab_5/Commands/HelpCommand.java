@@ -1,6 +1,6 @@
-package Commands;
+package commands;
 
-import Logic.IODevice;
+import logic.IODevice;
 
 import java.util.HashMap;
 

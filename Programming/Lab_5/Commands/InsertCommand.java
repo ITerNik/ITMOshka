@@ -1,16 +1,15 @@
-package Commands;
+package commands;
 
-import Elements.Person;
-import Logic.CliDevice;
-import Logic.IODevice;
-import Logic.Manager;
+import elements.Person;
+import logic.IODevice;
+import logic.Manager;
 
 
 public class InsertCommand extends AbstractCommand {
     public InsertCommand(IODevice io, Manager manager) {
         super(io, manager);
         elements = new Person[1];
-        parameters = new String[]{"key"};
+        setParameterNames("key");
     }
 
     @Override

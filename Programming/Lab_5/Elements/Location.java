@@ -1,4 +1,4 @@
-package Elements;
+package elements;
 
 public class Location implements Comparable<Location> {
     private long x;

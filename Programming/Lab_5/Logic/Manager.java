@@ -1,7 +1,7 @@
-package Logic;
+package logic;
 
-import Elements.Location;
-import Elements.Person;
+import elements.Location;
+import elements.Person;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

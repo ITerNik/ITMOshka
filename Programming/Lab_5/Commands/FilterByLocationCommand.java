@@ -1,10 +1,10 @@
-package Commands;
+package commands;
 
-import Elements.Location;
-import Elements.Person;
-import Exceptions.BadParametersException;
-import Logic.IODevice;
-import Logic.Manager;
+import elements.Location;
+import elements.Person;
+import exceptions.BadParametersException;
+import logic.IODevice;
+import logic.Manager;
 
 import java.util.ArrayList;
 
@@ -15,7 +15,7 @@ public class FilterByLocationCommand extends AbstractCommand{
     private ArrayList<Person> selected;
     public FilterByLocationCommand(IODevice io, Manager manager) {
         super(io, manager);
-        parameters = new String[]{"x_coordinate", "y_coordinate", "z_coordinate"};
+        setParameterNames("x_coordinate", "y_coordinate", "z_coordinate");
     }
 
     @Override

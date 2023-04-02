@@ -1,10 +1,9 @@
-package Commands;
+package commands;
 
-import Elements.Person;
-import Exceptions.*;
-import Logic.IODevice;
-import Logic.Manager;
-import Logic.Service;
+import elements.Person;
+import exceptions.*;
+import logic.IODevice;
+import logic.Manager;
 
 public abstract class AbstractCommand implements Command {
     protected Manager manager;
@@ -12,7 +11,8 @@ public abstract class AbstractCommand implements Command {
     protected String[] parameters;
     protected Person[] elements;
 
-    public AbstractCommand() {}
+    public AbstractCommand() {
+    }
 
     public AbstractCommand(IODevice io, Manager manager) {
         this.manager = manager;
@@ -21,6 +21,15 @@ public abstract class AbstractCommand implements Command {
 
     protected void checkArguments(String[] param) throws BadParametersException {
     }
+
+    protected void setParameterNames(String... names) {
+        parameters = names;
+    }
+
+    protected void setElementNumber(int number) {
+        elements = new Person[number];
+    }
+
 
     @Override
     public Command parseArguments(String[] param) throws BadParametersException {

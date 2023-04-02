@@ -1,13 +1,12 @@
-package Commands;
+package commands;
 
-import Logic.CliDevice;
-import Logic.IODevice;
-import Logic.Manager;
+import logic.IODevice;
+import logic.Manager;
 
 public class RemoveKeyCommand extends AbstractCommand {
     public RemoveKeyCommand(IODevice io, Manager manager) {
         super(io, manager);
-        parameters = new String[]{"key"};
+        setParameterNames("key");
     }
 
     @Override

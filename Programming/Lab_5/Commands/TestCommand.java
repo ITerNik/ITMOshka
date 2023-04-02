@@ -1,20 +1,18 @@
-package Commands;
+package commands;
 
-import Elements.Person;
-import Logic.FileDevice;
-import Logic.IODevice;
-import Logic.Manager;
+import elements.Person;
+import logic.IODevice;
+import logic.Manager;
 
 
 public class TestCommand extends AbstractCommand {
     public TestCommand(IODevice io, Manager manager) {
         super(io,manager);
-        elements = new Person[1];
     }
 
     @Override
     public void execute() {
-        io.write(elements[0]);
+        manager.put("New", new Person());
     }
 
     @Override

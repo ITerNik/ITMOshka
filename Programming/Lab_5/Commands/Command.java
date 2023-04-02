@@ -1,7 +1,6 @@
-package Commands;
+package commands;
 
-import Elements.Person;
-import Exceptions.BadParametersException;
+import exceptions.BadParametersException;
 
 public interface Command {
 

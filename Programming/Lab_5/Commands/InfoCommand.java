@@ -1,8 +1,7 @@
-package Commands;
+package commands;
 
-import Logic.CliDevice;
-import Logic.IODevice;
-import Logic.Manager;
+import logic.IODevice;
+import logic.Manager;
 
 public class InfoCommand extends AbstractCommand {
     private String report;

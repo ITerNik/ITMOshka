@@ -1,51 +1,45 @@
-package Logic;
-
-import Elements.*;
+package logic;
 
 import java.io.*;
-import java.util.Hashtable;
-import java.util.Scanner;
+import java.util.*;
 
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.ObjectWriter;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import elements.Person;
 
-public class JsonHandler {
-    private Scanner reader;
+public class JsonHandler implements Closeable {
+    private Scanner input;
     private BufferedOutputStream output;
-    private String fileName;
+    private File file;
 
     public JsonHandler(String fileName) throws FileNotFoundException {
-        reader = new Scanner(new FileInputStream(fileName));
-        output = new BufferedOutputStream(new FileOutputStream(fileName, true));
-        this.fileName = fileName;
+        this.file = new File(fileName);
+        input = new Scanner(new FileInputStream(file));
+        output = new BufferedOutputStream(new FileOutputStream(file, true));
+
     }
 
-    public String readFileAsString() {
+    private String readFileAsString() {
         String res = "";
-        while (reader.hasNextLine()) {
-            res += reader.nextLine() + '\n';
+        while (input.hasNextLine()) {
+            res += input.nextLine() + '\n';
         }
         return res;
     }
 
-    public Person[] getDataFromString() {
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            Person[] data = mapper.readValue(readFileAsString(), Person[].class);
-            return data;
-        } catch (IOException e) {
-            System.out.println("Проблемы с чтением из файла");
-            return new Person[]{};
-        }
-    }
 
     public void clear() throws IOException {
-        new FileOutputStream(fileName).close();
+        new FileOutputStream(file).close();
     }
 
-    public void writeData(Hashtable collection) throws IOException{
-        ObjectWriter writer = new ObjectMapper().writer().withDefaultPrettyPrinter();
-        byte[] buf = writer.writeValueAsBytes(collection);
+    public void writeData(Hashtable collection) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+        mapper.registerModule(new JavaTimeModule());
+        byte[] buf = mapper.writeValueAsBytes(collection);
         output.write(buf);
         output.flush();
     }
@@ -56,9 +50,21 @@ public class JsonHandler {
         output.flush();
     }
 
-    public Hashtable readCollection() throws IOException {
-        return new ObjectMapper().readValue(readFileAsString(),
-               // new TypeReference<Map<String, Person>>(){}
-        Hashtable.class);
+    public Hashtable readCollection() throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        TypeReference<Hashtable<String, Person>> typeRef = new TypeReference<>() {
+        };
+        String res = readFileAsString();
+        mapper.registerModule(new JavaTimeModule());
+        if (res.isBlank()) {
+            return new Hashtable<String, Person>();
+        }
+        return mapper.readValue(res, typeRef);
+    }
+
+    @Override
+    public void close() throws IOException {
+        output.close();
+        input.close();
     }
 }

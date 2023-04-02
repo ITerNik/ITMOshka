@@ -1,4 +1,4 @@
-package Logic;
+package logic;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

@@ -1,8 +1,7 @@
-package Commands;
+package commands;
 
-import Logic.CliDevice;
-import Logic.IODevice;
-import Logic.Manager;
+import logic.IODevice;
+import logic.Manager;
 
 import java.util.ArrayList;
 
@@ -10,7 +9,7 @@ public class RemoveGreaterCommand extends AbstractCommand {
     private ArrayList<String> removed;
     public RemoveGreaterCommand(IODevice io, Manager manager) {
         super(io, manager);
-        parameters = new String[]{"key"};
+        setParameterNames("key");
     }
 
     @Override

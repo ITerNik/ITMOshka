@@ -1,27 +1,26 @@
-package Logic;
+package logic;
 
-import Elements.Person;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Hashtable;
 
 public class Launcher {
 
     public static void main(String[] args) {
-        try {
-            JsonHandler handler = new JsonHandler("test.json");
-            Hashtable<String, Person> collection = handler.readCollection();
-            Manager container = new Manager(collection);
-            Service app = new ConsoleService(new CliDevice(), container, handler);
-            //Service app = new ConsoleService(new CommandLineDevice(), new Container(new HashMap()), new FileDevice("test.json"));
+        try (JsonHandler handler = new JsonHandler("test.json");
+             CliDevice cio = new CliDevice()) {
+            Manager manager = new Manager(handler.readCollection());
+            Service app = new ConsoleService(cio, manager, handler);
             app.start();
         } catch (FileNotFoundException e) {
             System.out.println("Файл не найден");
-        } catch (IOException e) {
-            System.out.println("Неверный формат данных в файле");
+        } catch (JsonProcessingException e) {
+            System.out.println("Невозможно десериализовать данные в файле");
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Необходимо передать название файла в аргументах");
+        } catch (IOException e) {
+            System.out.println("Поток для работы с файлом не закрыт");
         }
 
     }

@@ -1,6 +1,6 @@
-package Commands;
+package commands;
 
-import Logic.Service;
+import logic.Service;
 
 public class ExitCommand extends AbstractCommand {
     private Service service;

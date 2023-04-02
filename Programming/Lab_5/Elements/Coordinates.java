@@ -1,4 +1,4 @@
-package Elements;
+package elements;
 
 public class Coordinates implements Comparable<Coordinates> {
     private Double x; //Поле не может быть null

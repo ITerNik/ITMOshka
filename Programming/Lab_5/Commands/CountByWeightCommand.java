@@ -1,7 +1,7 @@
-package Commands;
+package commands;
 
-import Logic.IODevice;
-import Logic.Manager;
+import logic.IODevice;
+import logic.Manager;
 
 public class CountByWeightCommand extends AbstractCommand {
     private double weight;
@@ -9,7 +9,7 @@ public class CountByWeightCommand extends AbstractCommand {
 
     public CountByWeightCommand(IODevice io, Manager manager) {
         super(io, manager);
-        parameters = new String[]{"weight"};
+        setParameterNames("weight");
     }
 
     @Override

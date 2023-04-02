@@ -1,8 +1,8 @@
-package Commands;
+package commands;
 
-import Elements.Person;
-import Logic.IODevice;
-import Logic.Manager;
+import elements.Person;
+import logic.IODevice;
+import logic.Manager;
 
 import java.util.ArrayList;
 
@@ -10,7 +10,7 @@ public class RemoveLowerCommand extends AbstractCommand {
     private ArrayList<String> removed;
     public RemoveLowerCommand(IODevice io, Manager manager) {
         super(io, manager);
-        elements = new Person[1];
+        setElementNumber(1);
     }
 
     @Override

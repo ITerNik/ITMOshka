@@ -1,7 +1,7 @@
-package Logic;
+package logic;
 
-import Commands.*;
-import Exceptions.*;
+import commands.*;
+import exceptions.*;
 
 import java.io.FileNotFoundException;
 import java.util.*;
@@ -23,11 +23,20 @@ public class ConsoleService implements Service {
 
     public class CommandBuilder {
         private HashMap<String, Command> commandList = new HashMap<>();
+        private ArrayList<String> fileHistory;
         private IODevice io;
 
         public CommandBuilder(IODevice io) {
             this.io = io;
             initialize();
+            addCommand(new ExecuteScriptCommand(io, manager, new CommandBuilder(io, new ArrayList<>())));
+        }
+
+        public CommandBuilder(IODevice io, ArrayList<String> fileHistory) {
+            this.io = io;
+            this.fileHistory = fileHistory;
+            initialize();
+            addCommand(new ExecuteScriptCommand(io, manager, this));
         }
 
         public void addCommand(Command command) {
@@ -49,7 +58,6 @@ public class ConsoleService implements Service {
             addCommand(new RemoveGreaterCommand(io, manager));
             addCommand(new HelpCommand(io, commandList));
             addCommand(new CountByWeightCommand(io, manager));
-            addCommand(new ExecuteScriptCommand(io, manager, ConsoleService.this));
             addCommand(new GreaterLocationCommand(io, manager));
             addCommand(new FilterByLocationCommand(io, manager));
         }
@@ -61,6 +69,10 @@ public class ConsoleService implements Service {
             } catch (NullPointerException e) {
                 throw new NoSuchCommandException("Не существует команды " + tokens[0]);
             }
+        }
+        public void checkFile(String fileName) {
+            if (fileHistory.contains(fileName)) throw new BadParametersException("Предоставленный файл цикличен");
+            fileHistory.add(fileName);
         }
     }
 

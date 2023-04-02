@@ -1,10 +1,12 @@
-package Logic;
+package logic;
 
-import Elements.*;
+import elements.*;
 
+import java.io.Closeable;
+import java.io.IOException;
 import java.util.Scanner;
 
-public abstract class IODevice {
+public abstract class IODevice implements Closeable {
 
     protected Scanner input;
 
@@ -71,5 +73,10 @@ public abstract class IODevice {
 
     public void write(Person element) {
         System.out.println(element);
+    }
+
+    @Override
+    public void close() throws IOException {
+        input.close();
     }
 }

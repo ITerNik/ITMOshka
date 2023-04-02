@@ -1,9 +1,8 @@
-package Commands;
+package commands;
 
 
-import Logic.IODevice;
-import Logic.Manager;
-
+import logic.IODevice;
+import logic.Manager;
 import java.util.ArrayList;
 
 public class UpdateIdCommand extends AbstractCommand {
@@ -12,7 +11,7 @@ public class UpdateIdCommand extends AbstractCommand {
 
     public UpdateIdCommand(IODevice io, Manager manager) {
         super(io, manager);
-        parameters = new String[]{"id"};
+        setParameterNames("id");
     }
 
     @Override
