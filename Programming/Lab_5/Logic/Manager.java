@@ -34,17 +34,16 @@ public class Manager {
             return  unique.size() == collection.size();
         }
 
-        public void add(T value) {
-            unique.add(value);
+        public boolean add(T value) {
+            return unique.add(value);
         }
 
-        public void remove(T value) {
-            unique.remove(value);
+        public boolean remove(T value) {
+            return unique.remove(value);
         }
 
-        public void replace(T oldValue, T newValue) {
-            unique.remove(oldValue);
-            unique.add(newValue);
+        public boolean replace(T oldValue, T newValue) {
+            return unique.remove(oldValue) && unique.add(newValue);
         }
 
         public void clear() {
@@ -64,8 +63,7 @@ public class Manager {
 
     public void put(String key, Person person) {
         int currId = person.getId();
-        while (!uniqueSet.checkCondition()) {
-            uniqueSet.add(currId);
+        while (!uniqueSet.add(currId)) {
             currId++;
         }
         person.setCounterId(currId);

@@ -5,6 +5,7 @@ import logic.*;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ExecuteScriptCommand extends AbstractCommand {
 

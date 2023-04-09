@@ -1,7 +1,6 @@
 package elements;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import annotations.Builder;
 import exceptions.BadParametersException;
 
 import java.time.LocalDate;
@@ -20,44 +19,12 @@ public class Person implements Comparable<Person> {
     private HairColor hairColor; //Поле может быть null
     private Location location; //Поле может быть null
 
-    {
-        idCounter.incrementAndGet();
-        creationDate = LocalDate.now();
-    }
-
-    public Person(int id, String name, Coordinates coordinates, LocalDate date, double height, double weight, EyeColor eyeColor, HairColor hairColor, Location location) {
-        this.id = id;
-        this.name = name;
-        this.coordinates = coordinates;
-        this.creationDate = date;
-        this.height = height;
-        this.weight = weight;
-        this.eyeColor = eyeColor;
-        this.hairColor = hairColor;
-        this.location = location;
-    }
-
-    public Person(String name, Coordinates coordinates, double height, double weight, EyeColor eyeColor, HairColor hairColor, Location location) {
-        this.id = idCounter.get();
-        this.name = name;
-        this.coordinates = coordinates;
-        this.height = height;
-        this.weight = weight;
-        this.eyeColor = eyeColor;
-        this.hairColor = hairColor;
-        this.location = location;
-    }
-
 
     public Person() {
+        this.id = idCounter.getAndIncrement();
+        this.creationDate = LocalDate.now();
     }
 
-
-    @Override
-    public String toString() {
-        return String.format("ID: %s\nИмя: %s\nКоординаты: %s\nДата создания: %s\nРост: %s\nВес: %s\nЦвет глаз: %s\n" +
-                "Цвет волос: %s\nМестоположение: %s", id, name, coordinates, creationDate, height, weight, eyeColor, hairColor, location);
-    }
 
     public Location getLocation() {
         return location;
@@ -75,14 +42,6 @@ public class Person implements Comparable<Person> {
         return name;
     }
 
-    public Coordinates getCoordinates() {
-        return coordinates;
-    }
-
-    public double getHeight() {
-        return height;
-    }
-
 
     public EyeColor getEyeColor() {
         return eyeColor;
@@ -92,9 +51,72 @@ public class Person implements Comparable<Person> {
         return hairColor;
     }
 
+    public void setId(int id) {
+        if (id < 0) {
+            throw new BadParametersException("ID не может быть отрицательным");
+        }
+        this.id = id;
+    }
 
-    public LocalDate getCreationDate() {
-        return creationDate;
+    public void setCreationDate(LocalDate creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    @Builder(field = "Имя", order = 2)
+    public void setName(String name) {
+        if (name == null || name.isBlank()) throw new BadParametersException("Человек должен иметь имя");
+        this.name = name;
+    }
+
+    @Builder(order = 3)
+    public void setCoordinates(Coordinates coordinates) {
+        if (coordinates == null) throw new BadParametersException("Координаты должны быть определены");
+        this.coordinates = coordinates;
+    }
+
+    @Builder(field = "Вес", order = 6)
+    public void setWeight(String weight) {
+        try {
+            this.weight = weight.isBlank() ? 0 : Double.parseDouble(weight);
+
+        } catch (NumberFormatException e) {
+            throw new BadParametersException("Вес должен быть вещественным числом");
+        }
+        if (this.weight < 0) throw new BadParametersException("Вес не может быть отрицательным");
+    }
+
+    @Builder(field = "Рост", order = 5)
+    public void setHeight(String height) {
+        try {
+            this.height = height.isBlank() ? 0 : Double.parseDouble(height);
+
+        } catch (NumberFormatException e) {
+            throw new BadParametersException("Рост должен быть вещественным числом");
+        }
+        if (this.height < 0) throw new BadParametersException("Рост не может быть отрицательным");
+    }
+
+    @Builder(field = "Цвет глаз", variants = {"Зеленый", "Красный", "Черный", "Синий", "Желтый"}, order = 7)
+    public void StringSetEyeColor(String number) {
+        try {
+            this.eyeColor = number.isBlank() ? null : EyeColor.getByNumber(Integer.parseInt(number));
+        } catch (NumberFormatException e) {
+            throw new BadParametersException("Не существует такого цвета");
+        }
+    }
+
+    @Builder(field = "Цвет волос", variants = {"Рыжий", "Седой", "Брюнет"}, order = 8)
+    public void StringSetHairColor(String number) {
+        try {
+            this.hairColor = number.isBlank() ? null : HairColor.getByNumber(Integer.parseInt(number));
+        } catch (NumberFormatException e) {
+            throw new BadParametersException("Не существует такого цвета");
+        }
+    }
+
+    @Builder(order = 9)
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     public void setCounterId(int id) {
@@ -113,6 +135,12 @@ public class Person implements Comparable<Person> {
             res = name.compareTo(o.name);
         }
         return res;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("ID: %s\nИмя: %s\nКоординаты: %s\nДата создания: %s\nРост: %s\nВес: %s\nЦвет глаз: %s\n" +
+                "Цвет волос: %s\nМестоположение: %s", id, name, coordinates, creationDate, height, weight, eyeColor, hairColor, location);
     }
 }
 

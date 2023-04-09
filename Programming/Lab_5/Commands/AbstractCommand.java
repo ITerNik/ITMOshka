@@ -5,6 +5,11 @@ import exceptions.*;
 import logic.IODevice;
 import logic.Manager;
 
+/**
+ * Абстрактный класс реализующий интерфейс Command и определяющий базовое поведение команд.
+ * Здесь определены методы чтения и установки аргументов.
+ * Все команды наследуются от этого класса и переопределяют исполнение в соответствии с требованиями.
+ */
 public abstract class AbstractCommand implements Command {
     protected Manager manager;
     protected IODevice io;
@@ -19,17 +24,38 @@ public abstract class AbstractCommand implements Command {
         this.io = io;
     }
 
+    /**
+     * Проверяет аргументы из командной строки на соответствие формату
+     * и выбрасывает исключение для обработки выше в случае некорректного ввода.
+     * Переопределить при необходимости
+     *
+     * @param param строка идущая после названия команды, разбитая на токены по пробельным символам
+     * @throws BadParametersException если аргумент не соответствует формату
+     */
     protected void checkArguments(String[] param) throws BadParametersException {
     }
 
+    /**
+     * Устанавливает количество аргументов, требуемых команде для последующей проверки
+     * с помощью {@link #checkArguments} и считывания {@link #parseArguments}
+     *
+     * @param names набор строк которые будут выводиться при вызове команды help
+     * @see #argumentsInfo()
+     */
     protected void setParameterNames(String... names) {
         parameters = names;
     }
 
+    /**
+     * Устанавливает количество экземпляров, требуемых команде для считывания и исполнения.
+     * Задает количество скобок {element} выводимых help
+     *
+     * @param number количество считываемых элементов коллекции
+     * @see #argumentsInfo()
+     */
     protected void setElementNumber(int number) {
         elements = new Person[number];
     }
-
 
     @Override
     public Command parseArguments(String[] param) throws BadParametersException {
@@ -47,11 +73,12 @@ public abstract class AbstractCommand implements Command {
 
         if (elements != null) {
             for (int i = 0; i < elements.length; ++i) {
-                elements[i] = io.readPerson();
+                elements[i] = io.readElement(new Person());
             }
         }
         return this;
     }
+
 
     @Override
     public String getInfo() {

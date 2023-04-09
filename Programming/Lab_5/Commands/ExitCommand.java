@@ -1,16 +1,15 @@
 package commands;
 
+import exceptions.NonUniqueIdException;
 import logic.Service;
 
+import java.util.NoSuchElementException;
+
 public class ExitCommand extends AbstractCommand {
-    private Service service;
-    public ExitCommand(Service service) {
-        this.service = service;
-    }
 
     @Override
     public void execute() {
-        service.exit();
+        throw new NoSuchElementException();
     }
 
     @Override

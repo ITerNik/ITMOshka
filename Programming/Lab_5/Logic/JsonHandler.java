@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import elements.Person;
+import exceptions.BadParametersException;
 import exceptions.StartingProblemException;
 
 public class JsonHandler implements Closeable {
@@ -60,7 +61,7 @@ public class JsonHandler implements Closeable {
         try {
             return mapper.readValue(fileAsString, typeRef);
         } catch (JsonProcessingException e) {
-            throw new StartingProblemException("Невозможно десериализовать данные в файле");
+            throw new StartingProblemException(String.format("В файле %s: %s", file.getName(), e.getMessage()));
         }
     }
 

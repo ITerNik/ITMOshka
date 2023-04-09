@@ -6,7 +6,6 @@ import exceptions.*;
 import java.util.*;
 
 public class ConsoleService implements Service {
-    private boolean connect;
     private Queue<Command> history = new LinkedList<>();
     private Manager manager;
     private CliDevice cio;
@@ -43,7 +42,7 @@ public class ConsoleService implements Service {
         }
 
         private void initialize() {
-            addCommand(new ExitCommand(ConsoleService.this));
+            addCommand(new ExitCommand());
             addCommand(new ClearCommand(io, manager));
             addCommand(new TestCommand(io, manager));
             addCommand(new InfoCommand(io, manager));
@@ -85,9 +84,8 @@ public class ConsoleService implements Service {
 
     @Override
     public void start() {
-        connect = true;
         cio.write("Добро пожаловать!");
-        while (connect) {
+        while (true) {
             try {
                 cio.write("Пожалуйста, введите команду:");
                 String commandLine = cio.readLine();
@@ -98,13 +96,9 @@ public class ConsoleService implements Service {
             } catch (NoSuchCommandException | BadParametersException e) {
                 cio.write(e.getMessage() + "\n");
             } catch (NoSuchElementException e) {
-                connect = false;
+                System.out.println("Заглядывайте еще!");
+                break;
             }
         }
-    }
-
-    @Override
-    public void exit() {
-        connect = false;
     }
 }
