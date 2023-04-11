@@ -30,8 +30,8 @@ public class Manager {
     public class SynchronizedSet<T> {
         private TreeSet<T> unique = new TreeSet<>();
 
-        public boolean checkCondition()  {
-            return  unique.size() == collection.size();
+        public boolean checkCondition() {
+            return unique.size() == collection.size();
         }
 
         public boolean add(T value) {
@@ -102,11 +102,17 @@ public class Manager {
     }
 
     public int countGreaterThanLocation(Location location) {
-        return getKeyIf(currKey -> collection.get(currKey).getLocation().compareTo(location) > 0).size();
+        return getKeyIf(currKey -> {
+            Location curr = collection.get(currKey).getLocation();
+            return curr != null && curr.compareTo(location) > 0;
+        }).size();
     }
 
     public ArrayList<Person> filterByLocation(Location location) {
-        ArrayList<String> selected = getKeyIf(currKey -> collection.get(currKey).getLocation() == location);
+        ArrayList<String> selected = getKeyIf(currKey -> {
+            Location curr = collection.get(currKey).getLocation();
+            return curr != null && curr.equals(location);
+        });
         ArrayList<Person> res = new ArrayList<>();
         if (selected.isEmpty()) throw new IllegalArgumentException("Элементов с такой локацией не существует");
         else {
@@ -119,19 +125,19 @@ public class Manager {
 
 
     public ArrayList<String> removeGreater(String key) {
-        ArrayList<String> removed = getKeyIf(currKey -> currKey.compareTo(key) < 0);
+        ArrayList<String> removed = getKeyIf(currKey -> currKey.compareTo(key) > 0);
         for (String currKey : removed) {
-            collection.remove(currKey);
             uniqueSet.remove(collection.get(currKey).getId());
+            collection.remove(currKey);
         }
         return removed;
     }
 
     public ArrayList<String> removeLower(Person element) {
-        ArrayList<String> removed = getKeyIf(currKey -> collection.get(currKey).compareTo(element) > 0);
+        ArrayList<String> removed = getKeyIf(currKey -> collection.get(currKey).compareTo(element) < 0);
         for (String currKey : removed) {
-            collection.remove(currKey);
             uniqueSet.remove(collection.get(currKey).getId());
+            collection.remove(currKey);
         }
         return removed;
     }
@@ -153,7 +159,7 @@ public class Manager {
         }
         String res = "";
         for (String key : collection.keySet()) {
-            res += String.format("Человек \"%s\": \n%s\n\n", key, collection.get(key));
+            res += String.format("Человек \"%s\":\n%s\n\n", key, collection.get(key));
         }
         return res;
     }

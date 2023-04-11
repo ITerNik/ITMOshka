@@ -21,8 +21,11 @@ public class Person implements Comparable<Person> {
 
 
     public Person() {
+    }
+
+    public Person(LocalDate date) {
         this.id = idCounter.getAndIncrement();
-        this.creationDate = LocalDate.now();
+        creationDate = date;
     }
 
 
@@ -96,21 +99,25 @@ public class Person implements Comparable<Person> {
         if (this.height < 0) throw new BadParametersException("Рост не может быть отрицательным");
     }
 
-    @Builder(field = "Цвет глаз", variants = {"Зеленый", "Красный", "Черный", "Синий", "Желтый"}, order = 7)
-    public void StringSetEyeColor(String number) {
-        try {
-            this.eyeColor = number.isBlank() ? null : EyeColor.getByNumber(Integer.parseInt(number));
-        } catch (NumberFormatException e) {
-            throw new BadParametersException("Не существует такого цвета");
+    @Builder(field = "Цвет глаз", variants = {"Зеленый", "Красный", "Карий", "Голубой", "Янтарь"}, order = 7)
+    public void setEyeColor(String value) {
+        if (value == null || value.isBlank()) {
+            this.eyeColor = null;
+        } else {
+            EyeColor converted = EyeColor.getByValue(value);
+            if (converted == null) throw new BadParametersException("Такого цвета не существует");
+            this.eyeColor = converted;
         }
     }
 
     @Builder(field = "Цвет волос", variants = {"Рыжий", "Седой", "Брюнет"}, order = 8)
-    public void StringSetHairColor(String number) {
-        try {
-            this.hairColor = number.isBlank() ? null : HairColor.getByNumber(Integer.parseInt(number));
-        } catch (NumberFormatException e) {
-            throw new BadParametersException("Не существует такого цвета");
+    public void setHairColor(String value) {
+        if (value == null || value.isBlank()) {
+            this.hairColor = null;
+        } else {
+            HairColor converted = HairColor.getByValue(value);
+            if (converted == null) throw new BadParametersException("Такого цвета не существует");
+            this.hairColor = converted;
         }
     }
 
@@ -132,7 +139,7 @@ public class Person implements Comparable<Person> {
             res = Double.compare(weight, o.weight);
         }
         if (res == 0) {
-            res = name.compareTo(o.name);
+            res = name.compareToIgnoreCase(o.name);
         }
         return res;
     }

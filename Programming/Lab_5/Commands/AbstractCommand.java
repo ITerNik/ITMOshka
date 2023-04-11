@@ -5,6 +5,8 @@ import exceptions.*;
 import logic.IODevice;
 import logic.Manager;
 
+import java.time.LocalDate;
+
 /**
  * Абстрактный класс реализующий интерфейс Command и определяющий базовое поведение команд.
  * Здесь определены методы чтения и установки аргументов.
@@ -14,7 +16,7 @@ public abstract class AbstractCommand implements Command {
     protected Manager manager;
     protected IODevice io;
     protected String[] parameters;
-    protected Person[] elements;
+    protected Object[] elements;
 
     public AbstractCommand() {
     }
@@ -50,11 +52,11 @@ public abstract class AbstractCommand implements Command {
      * Устанавливает количество экземпляров, требуемых команде для считывания и исполнения.
      * Задает количество скобок {element} выводимых help
      *
-     * @param number количество считываемых элементов коллекции
+     * @param elements количество считываемых элементов коллекции
      * @see #argumentsInfo()
      */
-    protected void setElementNumber(int number) {
-        elements = new Person[number];
+    protected void setElements(Object... elements) {
+        this.elements = elements;
     }
 
     @Override
@@ -73,7 +75,7 @@ public abstract class AbstractCommand implements Command {
 
         if (elements != null) {
             for (int i = 0; i < elements.length; ++i) {
-                elements[i] = io.readElement(new Person());
+                elements[i] = io.readElement(elements[i]);
             }
         }
         return this;
@@ -100,7 +102,7 @@ public abstract class AbstractCommand implements Command {
         }
         if (elements != null) {
             for (int i = 0; i < elements.length; ++i) {
-                res += " {element}";
+                res += String.format(" {%s}", elements[i].getClass().getSimpleName());
             }
         }
         return res;

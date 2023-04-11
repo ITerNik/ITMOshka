@@ -4,17 +4,17 @@ import exceptions.BadParametersException;
 import logic.*;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class ExecuteScriptCommand extends AbstractCommand {
 
     private ConsoleService.CommandBuilder builder;
     private FileDevice fio;
 
+    private String report = "";
+
     @Override
     protected void checkArguments(String[] param) throws BadParametersException {
-        builder.checkFile(param[0]);
+        if (!builder.addToFileHistory(param[0])) throw new BadParametersException("Исполнение файла зациклилось");
         try {
             fio = new FileDevice(param[0]);
         } catch (FileNotFoundException e) {
@@ -30,12 +30,13 @@ public class ExecuteScriptCommand extends AbstractCommand {
 
     @Override
     public void execute() {
+        builder.setDevice(fio);
         while (fio.hasNextLine()) {
             String commandLine = fio.readLine();
             Command current = builder.build(commandLine);
             current.execute();
-            io.write("Результат команды " + current.getName() + ":");
-            io.write(current.getReport());
+            report += String.format("Результат команды %s:%n", current.getName());
+            report += current.getReport() + "\n";
         }
     }
 
@@ -46,7 +47,7 @@ public class ExecuteScriptCommand extends AbstractCommand {
 
     @Override
     public String getReport() {
-        return "Скрипт успешно выполнен";
+        return report;
     }
 
     @Override

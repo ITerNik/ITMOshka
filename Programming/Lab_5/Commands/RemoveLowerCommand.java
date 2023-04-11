@@ -1,21 +1,23 @@
 package commands;
 
+import elements.Location;
 import elements.Person;
 import logic.IODevice;
 import logic.Manager;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class RemoveLowerCommand extends AbstractCommand {
     private ArrayList<String> removed;
     public RemoveLowerCommand(IODevice io, Manager manager) {
         super(io, manager);
-        setElementNumber(1);
+        setElements(new Person(LocalDate.now()));
     }
 
     @Override
     public void execute() {
-        removed = manager.removeLower(elements[0]);
+        removed = manager.removeLower((Person) elements[0]);
     }
 
     @Override

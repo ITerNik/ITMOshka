@@ -1,40 +1,33 @@
 package elements;
 
 public enum EyeColor {
-    GREEN("Зеленый"),
-    RED("Красный"),
-    BLACK("Черный"),
-    BLUE("Синий"),
-    YELLOW("Желтый");
+    GREEN("ЗЕЛЕНЫЙ"),
+    RED("КРАСНЫЙ"),
+    BLACK("КАРИЙ"),
+    BLUE("ГОЛУБОЙ"),
+    YELLOW("ЯНТАРЬ");
 
-    private String name;
+    private String locale;
 
     EyeColor(String name) {
-        this.name = name;
+        this.locale = name;
     }
 
-    public static EyeColor getByNumber(int number) {
+    public static EyeColor getByValue(String value) {
+        for (EyeColor color : EyeColor.values()) {
+            if (color.locale.contains(value.toUpperCase()) ||
+                    color.name().contains(value.toUpperCase())) return color;
+        }
         try {
-            return EyeColor.values()[number - 1];
-        } catch (ArrayIndexOutOfBoundsException e) {
-            throw new IllegalArgumentException("Нет такого цвета");
+            return EyeColor.values()[Integer.parseInt(value) - 1];
+        } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
+            return null;
         }
     }
 
-
-    public static void checkColor(String field) {
-        try {
-            int number = Integer.parseInt(field);
-            EyeColor test = EyeColor.values()[number - 1];
-        } catch (NumberFormatException e) {
-            throw e;
-        } catch (ArrayIndexOutOfBoundsException e) {
-            throw new IllegalArgumentException("Нет такого цвета");
-        }
-    }
 
     @Override
     public String toString() {
-        return name;
+        return locale;
     }
 }

@@ -1,17 +1,17 @@
 package commands;
 
 import elements.Person;
-import exceptions.BadParametersException;
-import exceptions.NonUniqueIdException;
 import logic.IODevice;
 import logic.Manager;
+
+import java.time.LocalDate;
 
 
 public class InsertCommand extends AbstractCommand {
     public InsertCommand(IODevice io, Manager manager) {
         super(io, manager);
-        elements = new Person[1];
         setParameterNames("key");
+        setElements(new Person(LocalDate.now()));
     }
 
     @Override
@@ -22,7 +22,7 @@ public class InsertCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        manager.put(parameters[0], elements[0]);
+        manager.put(parameters[0], (Person) elements[0]);
     }
 
     @Override

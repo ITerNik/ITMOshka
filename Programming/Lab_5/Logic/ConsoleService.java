@@ -68,9 +68,17 @@ public class ConsoleService implements Service {
                 throw new NoSuchCommandException("Не существует команды " + tokens[0]);
             }
         }
-        public void checkFile(String fileName) {
-            if (fileHistory.contains(fileName)) throw new BadParametersException("Предоставленный файл цикличен");
-            fileHistory.add(fileName);
+        public boolean addToFileHistory(String fileName) {
+            if (!fileHistory.contains(fileName)) {
+                fileHistory.add(fileName);
+                return true;
+            }
+            return false;
+        }
+
+        public void setDevice(IODevice io) {
+            this.io = io;
+            initialize();
         }
     }
 
@@ -93,7 +101,7 @@ public class ConsoleService implements Service {
                 current.execute();
                 cio.write(current.getReport() + "\n");
                 logCommand(current);
-            } catch (NoSuchCommandException | BadParametersException e) {
+            } catch (NoSuchCommandException | BadParametersException | IllegalArgumentException e) {
                 cio.write(e.getMessage() + "\n");
             } catch (NoSuchElementException e) {
                 System.out.println("Заглядывайте еще!");

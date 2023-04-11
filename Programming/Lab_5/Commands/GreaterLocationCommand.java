@@ -6,30 +6,18 @@ import logic.IODevice;
 import logic.Manager;
 
 public class GreaterLocationCommand extends AbstractCommand {
-    private long x;
-    private double y;
-    private float z;
     private int count;
 
     public GreaterLocationCommand(IODevice io, Manager manager) {
         super(io, manager);
-        setParameterNames("x_coordinate", "y_coordinate", "z_coordinate");
+        setElements(new Location());
     }
 
-    @Override
-    protected void checkArguments(String[] param) throws BadParametersException {
-        try {
-            x = Long.parseLong(param[0]);
-            y = Double.parseDouble(param[1]);
-            z = Float.parseFloat(param[2]);
-        } catch (NumberFormatException e) {
-            throw new BadParametersException("Некорректный тип координат");
-        }
-    }
+
 
     @Override
     public void execute() {
-        count = manager.countGreaterThanLocation(new Location(x, y, z));
+        count = manager.countGreaterThanLocation((Location) elements[0]);
     }
 
     @Override
@@ -39,7 +27,7 @@ public class GreaterLocationCommand extends AbstractCommand {
 
     @Override
     public String getReport() {
-        return "Найдено " + count + "элементов";
+        return "Найдено элементов: " + count;
     }
 
     @Override

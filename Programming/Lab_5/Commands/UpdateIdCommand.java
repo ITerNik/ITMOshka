@@ -1,8 +1,11 @@
 package commands;
 
 
+import elements.Person;
 import logic.IODevice;
 import logic.Manager;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class UpdateIdCommand extends AbstractCommand {
@@ -12,7 +15,7 @@ public class UpdateIdCommand extends AbstractCommand {
     public UpdateIdCommand(IODevice io, Manager manager) {
         super(io, manager);
         setParameterNames("id");
-        setElementNumber(1);
+        setElements(new Person(LocalDate.now()));
     }
 
     @Override
@@ -28,7 +31,7 @@ public class UpdateIdCommand extends AbstractCommand {
     @Override
     public void execute() {
         for (String key : keys) {
-            manager.update(key, elements[0]);
+            manager.update(key, (Person) elements[0]);
         }
     }
 

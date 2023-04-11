@@ -56,4 +56,11 @@ public class Location implements Comparable<Location> {
         double distanceO = Math.sqrt(o.x * o.x + o.y * o.y + o.z * o.z);
         return Double.compare(distanceThis, distanceO);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || o.getClass() != Location.class) return false;
+        Location location = (Location) o;
+        return compareTo(location) == 0;
+    }
 }

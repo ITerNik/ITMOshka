@@ -1,5 +1,7 @@
 package commands;
 
+import elements.EyeColor;
+import elements.Location;
 import elements.Person;
 import logic.FileDevice;
 import logic.IODevice;
@@ -8,6 +10,7 @@ import logic.Manager;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
+import java.util.Arrays;
 
 
 public class TestCommand extends AbstractCommand {
@@ -18,13 +21,10 @@ public class TestCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        try {
-            FileDevice fio = new FileDevice("test.txt");
-            System.out.println(fio.readElement(new Person()));
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
+        Object[] arr = new Object[4];
+        arr[0] = new Person(LocalDate.now());
+        arr[1] = new Location();
+        System.out.println(Arrays.toString(arr));
     }
 
     @Override

@@ -1,37 +1,30 @@
 package elements;
 
 public enum HairColor {
-    ORANGE("Рыжий"),
-    WHITE("Седой"),
-    BROWN("Брюнет");
+    ORANGE("РЫЖИЙ"),
+    WHITE("СЕДОЙ"),
+    BROWN("БРЮНЕТ");
 
-    private String name;
+    private String locale;
 
     HairColor(String name) {
-        this.name = name;
+        this.locale = name;
     }
 
-    public static HairColor getByNumber(int number) {
-        try {
-            return HairColor.values()[number - 1];
-        } catch (ArrayIndexOutOfBoundsException e) {
-            throw new IllegalArgumentException("Нет такого цвета");
+    public static HairColor getByValue(String value) {
+        for (HairColor color : HairColor.values()) {
+            if (color.locale.contains(value.toUpperCase()) ||
+                    color.name().contains(value.toUpperCase())) return color;
         }
-    }
-
-    public static void checkColor(String field) {
         try {
-            int number = Integer.parseInt(field);
-            HairColor test = HairColor.values()[number - 1];
-        } catch (NumberFormatException e) {
-            throw e;
-        } catch (ArrayIndexOutOfBoundsException e) {
-            throw new IllegalArgumentException("Нет такого цвета");
+            return HairColor.values()[Integer.parseInt(value) - 1];
+        } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
+            return null;
         }
     }
 
     @Override
     public String toString() {
-        return name;
+        return locale;
     }
 }
